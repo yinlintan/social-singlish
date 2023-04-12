@@ -1,7 +1,2 @@
 # Social correlates of Singlish
-Template repository for web-based experiment projects.
-
-Here is a fun list:
-
-- Hello
-- Saved
+This repository contains related materials for a study investigating the social meanings that are associated with speech that is perceived to be more Singlish. This study is the second part of a larger study investigating the sociophonetic correlates of Singlish speech; the first part, which involves a perception experiment, can be found at https://github.com/yinlintan/singlish.
