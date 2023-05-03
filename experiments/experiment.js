@@ -26,11 +26,44 @@ const irb = {
 };
 timeline.push(irb);
 
+/* eligibility */
+const intro1 = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus:  `<p>Only complete this study if you are a Singaporean citizen or Singapore Permanent Resident (PR) who is 18 years old or older.</p>
+            <p>Please share this link with other Singaporean citizens and Singapore PRs, but do not participate in this study more than once. You will not be compensated more than once.</p>
+            <p>Press the SPACE BAR to continue.</p>`,
+    choices: [" "],
+};
+timeline.push(intro1);
+
+/* instructions */
+const intro2 = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus:  `This experiment should be completed on a desktop or laptop using the Google Chrome browser.
+    <BR><BR>Please ensure that you are wearing earphones or headphones for the duration of this experiment.
+    <BR><BR>Press the SPACE BAR to continue.`,
+    choices: [" "],
+};
+timeline.push(intro2);
+
+/* sound check 
+Put one of the deleted processed audio clips and have them type in the last word in the clip.
+*/
+const soundcheck = {
+  type: jsPsychCloze,
+  text: `<center><BR><BR><audio controls src="audio/soundcheck.wav"></audio></center><BR><BR>Listen carefully to the audio clip above. Type the LAST WORD that was said into the blank below and press "Continue".<BR><BR>% friends %`,
+  check_answers: true,
+  button_text: 'Continue',
+  mistake_fn: function () { alert("Wrong answer. Please make sure your audio is working properly and try again.") }
+};
+timeline.push(soundcheck);
+
 const instructions = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus:  `In this experiment, you will listen to short audio clips.
     <BR><BR>After listening to each clip, please evaluate the speaker by indicating how much you agree or disagree with the provided statements.
-    <BR><BR>Please press the SPACE BAR to continue.`,
+    <BR><BR>Please listen to the audio clip BEFORE answering the questions.
+    <BR><BR>Press the SPACE BAR to continue.`,
     choices: [" "]
 };
 timeline.push(instructions);
@@ -64,111 +97,5 @@ const trials = {
     randomize_question_order: true,
 };
 timeline.push(trials);
-
-const questionnaire = {
-    type: jsPsychSurvey,
-    pages: [
-        [
-            {
-                type: 'html',
-                prompt: "Please answer the following questions:"
-            },
-            {
-                type: 'multi-choice',
-                prompt: 'Did you read the instructions and do you think you did the task correctly?', 
-                name: 'correct', 
-                options: ['Yes', 'No', 'I was confused']
-            },
-            {
-                type: 'drop-down',
-                prompt: 'Gender:',
-                name: 'gender',
-                options: ['Female', 'Male', 'Non-binary/Non-conforming', 'Other']
-            },
-            {
-                type: 'text',
-                prompt: 'Age:',
-                name: 'age',
-                textbox_columns: 10
-            },
-            {
-                type: 'drop-down',
-                prompt: 'Level of education:',
-                name: 'education',
-                options: ['Some high school', 'Graduated high school', 'Some college', 'Graduated college', 'Hold a higher degree']
-            },
-            {
-                type: 'text',
-                prompt: "Native language? (What was the language spoken at home when you were growing up?)",
-                name: 'language',
-                textbox_columns: 20
-            },
-            {
-                type: 'drop-down',
-                prompt: 'Do you think the payment was fair?',
-                name: 'payment',
-                options: ['The payment was too low', 'The payment was fair']
-            },
-            {
-                type: 'drop-down',
-                prompt: 'Did you enjoy the experiment?',
-                name: 'enjoy',
-                options: ['Worse than the average experiment', 'An average experiment', 'Better than the average experiment']
-            },
-            {
-                type: 'text',
-                prompt: "Do you have any other comments about this experiment?",
-                name: 'comments',
-                textbox_columns: 30,
-                textbox_rows: 4
-            }
-        ]
-    ]
-};
-timeline.push(questionnaire);
-
-/* future study? */
-var futurestudies = {
-  type: jsPsychSurvey,
-  pages: [
-    [
-      {
-        type: 'multi-choice',
-        prompt: "Do you consent to being contacted for future studies?",
-        name: 'futurestudies',
-        options: ['Yes', 'No'],
-        required: true,
-      }
-    ]
-  ],
-  button_label_finish: 'Continue',
-};
-timeline.push(futurestudies);
-
-/* payment information */
-var payment = {
-  type: jsPsychSurveyText,
-  questions: [
-    {
-      prompt: `
-            <div class="text" id="trial">
-            <p>Please provide your email address in the field below for participant reimbursement purposes.</p>
-            </div>
-            `,
-      name: 'payment'
-    }
-  ]
-};
-timeline.push(payment);
-
-/* thank you */
-const thanks = {
-    type: jsPsychHtmlButtonResponse,
-    choices: ['Submit'],
-    stimulus: `<p>Thank you for completing the experiment!</p>
-            <p>We will contact you soon to arrange for participant reimbursement.</p>
-            <p>Please click "Submit" to submit your responses and complete the study.</p>`
-}
-timeline.push(thanks);
 
 jsPsych.run(timeline);
