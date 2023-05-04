@@ -57,9 +57,16 @@ var jsPsychSurveyLikert = (function (jspsych) {
           },
           /** Label of the button to submit responses. */
           button_label: {
-              type: jspsych.ParameterType.STRING,
+              type: jspsych.ParameterType.HTML_STRING,
               pretty_name: "Button label",
               default: "Continue",
+          },
+          /** The HTML for creating button. Can create own style. Use the "%choice%" string to indicate where the label from the choices parameter should be inserted. */
+          button_html: {
+              type: jspsych.ParameterType.HTML_STRING,
+              pretty_name: "Button HTML",
+              default: '<button class="jspsych-btn">%choice%</button>',
+              array: true,
           },
           /** Setting this to true will enable browser auto-complete or auto-fill for the form. */
           autocomplete: {

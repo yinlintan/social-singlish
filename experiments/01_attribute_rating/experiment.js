@@ -90,7 +90,7 @@ const trials = {
         speaker: "F1"
     },
     questions: [
-        {prompt: "The speaker is ARTICULATE.", name: 'articulate', labels: likert_scale, required: true},
+        {prompt: "The speaker is PROFESSIONAL.", name: 'professional', labels: likert_scale, required: true},
         {prompt: "The speaker is HONEST.", name: 'honest', labels: likert_scale, required: true},
         {prompt: "The speaker is ROUGH.", name: 'rough', labels: likert_scale, required: true},
         {prompt: "The speaker is AUTHENTIC.", name: 'authentic', labels: likert_scale, required: true},
@@ -98,6 +98,7 @@ const trials = {
         {prompt: "The speaker is EASYGOING.", name: 'easygoing', labels: likert_scale, required: true}
     ],
     randomize_question_order: true,
+    button_html: `<button id="continue-btn">Continue</button>`
 };
 timeline.push(trials);
 
