@@ -43,6 +43,11 @@ var jsPsychSurveyLikert = (function (jspsych) {
               pretty_name: "Randomize Question Order",
               default: false,
           },
+          stimulus: {
+              type: jspsych.ParameterType.AUDIO,
+              pretty_name: "Stimulus",
+              default: undefined,
+          },
           /** HTML-formatted string to display at top of the page above all of the questions. */
           preamble: {
               type: jspsych.ParameterType.HTML_STRING,
@@ -65,7 +70,7 @@ var jsPsychSurveyLikert = (function (jspsych) {
           button_html: {
               type: jspsych.ParameterType.HTML_STRING,
               pretty_name: "Button HTML",
-              default: '<button class="jspsych-btn">%choice%</button>',
+              default: '<button class="continue-btn">%choice%</button>',
               array: true,
           },
           /** Setting this to true will enable browser auto-complete or auto-fill for the form. */

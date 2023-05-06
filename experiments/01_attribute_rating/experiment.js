@@ -2,10 +2,31 @@ const jsPsych = initJsPsych({
     show_progress_bar: true,
     on_finish: function () {
         jsPsych.data.displayData('csv');
+        //window.location = "https://yinlintan.github.io/social-singlish/procedures/thanks.html";
+        proliferate.submit({"trials": data.values()});
       }
   });
 
 let timeline = [];
+
+// include attention checks
+// prevent experiment from being taken repeatedly
+// record too much data instead of too little, e.g., record name of item on top of conditions
+// run studies on WEEKDAYS in the MORNING (as early as possible California time)
+// shuffle 
+
+// for likert questions: random across participants, but consistent within participants
+// write a function and generate a random order of those words on the loading of the page
+// and then create an array of objects (the attributes)
+// have input to the helper function be these four objects and then shuffle it in the helper function
+// and then have this be the input to the questions parameter
+
+// maybe include attention checks and likert using plugin-survey (so that you can shuffle)
+
+// alternate trial types: 1 trial that's just an answer that says "listen to the audio"
+// first plugin: audio automatically plays (audio-keyboard, no response)
+// second plugin: then likert one but leave the audio player in there
+// use jsPsych timelinevariable('stimulus') --> link to stimulus in both audio-keyboard-response and survey plugins
 
 // push experiment logic to timeline here
 // 1 consent form
@@ -64,7 +85,6 @@ const instructions = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus:  `In this experiment, you will listen to short audio clips.
     <BR><BR>After listening to each clip, please evaluate the speaker by indicating how much you agree or disagree with the provided statements.
-    <BR><BR>Please listen to the audio clip BEFORE answering the questions.
     <BR><BR>Press the SPACE BAR to continue.`,
     choices: [" "]
 };
@@ -80,6 +100,57 @@ var likert_scale = [
   "Strongly Agree"
 ];
 
+/* create array of stimuli and randomize stimuli*/
+let tv_array = create_tv_array(trial_objects);
+let stimuli = shuffle_array(tv_array);
+
+/* create array of attributes and randomize attribute order per participant */
+let raw_attributes = [
+                {prompt: "The speaker is PROFESSIONAL.", name: 'professional', labels: likert_scale, required: true},
+                {prompt: "The speaker is HONEST.", name: 'honest', labels: likert_scale, required: true},
+                {prompt: "The speaker is ROUGH.", name: 'rough', labels: likert_scale, required: true},
+                {prompt: "The speaker is AUTHENTIC.", name: 'authentic', labels: likert_scale, required: true},
+                {prompt: "The speaker is COMPETENT.", name: 'competent', labels: likert_scale, required: true},
+                {prompt: "The speaker is EASYGOING.", name: 'easygoing', labels: likert_scale, required: true}
+                ];
+let attributes = shuffle_array(raw_attributes);
+
+let filepath = function getaudio() {
+    return jsPsych.timelineVariable('stimulus')
+  };
+
+/* rating trials */
+const trials = {
+    timeline: [
+        {
+            type: jsPsychAudioKeyboardResponse,
+            choices: ['NO_KEYS'],
+            stimulus: jsPsych.timelineVariable('stimulus'),
+            response_allowed_while_playing: false,
+            trial_ends_after_audio: true,
+            prompt: `Listen to this audio clip carefully.`,
+            on_finish: function(data) {
+                evaluate_response(data);
+            },
+            data: {
+              clip: jsPsych.timelineVariable('clip'),
+            }
+        },
+        {
+            type: jsPsychSurveyLikert,
+            preamble: `<p>Use the audio player to listen to the clip again.</p>
+            <p><audio controls src="${jsPsych.timelineVariable('stimulus')}"></audio></p>
+            <p>Rate how much you agree or disagree with the following statements:</p>`,
+            questions: function() {
+              return attributes
+            },
+        },
+        ],
+    timeline_variables: stimuli,
+};
+timeline.push(trials);
+
+/* old likert plugin 
 const trials = {
     type: jsPsychSurveyLikert,
     preamble: `<p>Please listen to the following audio clip.</p>
@@ -97,10 +168,34 @@ const trials = {
         {prompt: "The speaker is COMPETENT.", name: 'competent', labels: likert_scale, required: true},
         {prompt: "The speaker is EASYGOING.", name: 'easygoing', labels: likert_scale, required: true}
     ],
-    randomize_question_order: true,
-    button_html: `<button id="continue-btn">Continue</button>`
 };
-timeline.push(trials);
+timeline.push(trials); */
+
+/* audio plays first time
+const audioclip = {
+    type: jsPsychAudioKeyboardResponse,
+    trial_ends_after_audio: true,
+
+};
+ */
+
+/* likert questions and breaks
+const ratings = {
+    type: jsPsychSurvey,
+    pages: [
+      [ 
+        {
+          type: 'likert-table',
+          name: 'ratings',
+          statements: function(){
+            return XX
+          },
+        ]
+        }
+      ]
+    ],
+};
+*/
 
 /* survey 1: demographic questions */
 const survey1 = {
@@ -305,6 +400,28 @@ const survey4 = {
   randomize_question_order: true,
 };
 timeline.push(survey4);
+
+/* emotion scale */
+var emotion = {
+  type: jsPsychSurveyLikert,
+  scale_width: 700,
+  questions: [
+    {
+      prompt: `
+      <p style="font-weight: 500">How do you feel right now? Please indicate how you are feeling using the following scale.</p>
+      <center><img src="images/emotionscale.png"></center>
+      `, 
+      labels: [
+        "1", 
+        "2", 
+        "3", 
+        "4", 
+        "5"
+      ]
+    }
+  ]
+};
+timeline.push(emotion);
 
 /* payment information */
 const payment = {
