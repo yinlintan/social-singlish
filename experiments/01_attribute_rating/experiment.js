@@ -119,6 +119,9 @@ let filepath = function getaudio() {
     return jsPsych.timelineVariable('stimulus')
   };
 
+let audio_path = "";
+let new_audio_path = "<audio controls src=` + audio_path + `></audio>";
+
 /* rating trials */
 const trials = {
     timeline: [
@@ -138,8 +141,14 @@ const trials = {
         },
         {
             type: jsPsychSurveyLikert,
-            preamble: `<p>Use the audio player to listen to the clip again.</p>
-            <p><audio controls src="${jsPsych.timelineVariable('stimulus')}"></audio></p>
+            on_start: function() {
+              audio_path = jsPsych.timelineVariable('stimulus');
+            },
+            on_load: function() {
+              new_audio_path = "<audio controls src=` + audio_path + `></audio>";
+            },
+            preamble:  `<p>Press play to listen to the audio again.</p>
+            <p>${new_audio_path}</p>
             <p>Rate how much you agree or disagree with the following statements:</p>`,
             questions: function() {
               return attributes

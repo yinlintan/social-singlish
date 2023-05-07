@@ -1,6 +1,7 @@
 let trial_objects = [
     {
         "stimulus": "audio/F1_01.wav",
+
         "clip": "F1_01",
         "speaker": "F1"
     },
@@ -18,5 +19,25 @@ let trial_objects = [
         "stimulus": "audio/F2_02.wav",
         "clip": "F2_02",
         "speaker": "F2"
-    }
+    },
+    // {
+    //     "stimulus": "attention_check_01",
+    //     "clip": "stronglyagree",
+    //     "speaker": "attention_check"
+    // },
+    // {
+    //     "stimulus": "attention_check_02",
+    //     "clip": "agree",
+    //     "speaker": "attention_check"
+    // },
+    // {
+    //     "stimulus": "attention_check_03",
+    //     "clip": "somewhatdisagree",
+    //     "speaker": "attention_check"
+    // },
+    // {
+    //     "stimulus": "attention_check_04",
+    //     "clip": "neutral",
+    //     "speaker": "attention_check"
+    // }
 ]
