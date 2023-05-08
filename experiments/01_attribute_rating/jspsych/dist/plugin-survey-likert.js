@@ -43,11 +43,6 @@ var jsPsychSurveyLikert = (function (jspsych) {
               pretty_name: "Randomize Question Order",
               default: false,
           },
-          stimulus: {
-              type: jspsych.ParameterType.AUDIO,
-              pretty_name: "Stimulus",
-              default: undefined,
-          },
           /** HTML-formatted string to display at top of the page above all of the questions. */
           preamble: {
               type: jspsych.ParameterType.HTML_STRING,

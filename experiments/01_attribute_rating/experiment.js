@@ -120,7 +120,6 @@ let filepath = function getaudio() {
   };
 
 let audio_path = "";
-let new_audio_path = "<audio controls src=` + audio_path + `></audio>";
 
 /* rating trials */
 const trials = {
@@ -141,15 +140,18 @@ const trials = {
         },
         {
             type: jsPsychSurveyLikert,
-            on_start: function() {
-              audio_path = jsPsych.timelineVariable('stimulus');
+            // on_start: function() {
+            //   audio_path = jsPsych.timelineVariable('stimulus');
+            // },
+            // on_load: function() {
+            //   new_audio_path = "<audio controls src=` + audio_path + `></audio>";
+            // },
+            preamble: function() {
+              new_audio_path = "<audio controls src=" + '"' + jsPsych.timelineVariable('stimulus') + '"' + ">";
+              return `<p>Press play to listen to the audio again.</p>
+              <p>${new_audio_path}</p>
+              <p>Rate how much you agree or disagree with the following statements:</p>`
             },
-            on_load: function() {
-              new_audio_path = "<audio controls src=` + audio_path + `></audio>";
-            },
-            preamble:  `<p>Press play to listen to the audio again.</p>
-            <p>${new_audio_path}</p>
-            <p>Rate how much you agree or disagree with the following statements:</p>`,
             questions: function() {
               return attributes
             },
@@ -431,6 +433,24 @@ var emotion = {
   ]
 };
 timeline.push(emotion);
+
+/* previous study */
+const previous_study = {
+  type: jsPsychSurvey,
+  pages: [
+    [
+      {
+        type: 'multi-choice',
+        prompt: "Did you participate in the previous Singlish study (located at https://bit.ly/stanfordsinglish)?",
+        name: 'previous_study',
+        options: ['Yes', 'No', 'I am not sure'],
+        required: true,
+      }
+    ]
+  ],
+  button_label_finish: 'Continue',
+};
+timeline.push(previous_study);
 
 /* payment information */
 const payment = {
