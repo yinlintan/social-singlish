@@ -34,7 +34,7 @@ let timeline = [];
 // 3 experiment body (loop through stimuli ) -- trial 1 (audio + keyboard response), trial 2 ...
 // 4 questionnaire
 
-const preload_array = ['audio/Violin.wav', 'audio/F1_01.wav', 'audio/F1_02.wav'];
+const preload_array = trial_objects;
 const preload_trial = {
     type: jsPsychPreload,
     audio: preload_array
@@ -84,7 +84,7 @@ timeline.push(soundcheck);
 const instructions = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus:  `In this experiment, you will listen to short audio clips.
-    <BR><BR>After listening to each clip, please evaluate the speaker by indicating how much you agree or disagree with the provided statements.
+    <BR><BR>After listening to each clip, please indicate how much you agree or disagree with the provided statements.
     <BR><BR>Press the SPACE BAR to continue.`,
     choices: [" "]
 };
@@ -109,8 +109,8 @@ let raw_attributes = [
                 {prompt: "The speaker is PROFESSIONAL.", name: 'professional', labels: likert_scale, required: true},
                 {prompt: "The speaker is HONEST.", name: 'honest', labels: likert_scale, required: true},
                 {prompt: "The speaker is ROUGH.", name: 'rough', labels: likert_scale, required: true},
-                {prompt: "The speaker is AUTHENTIC.", name: 'authentic', labels: likert_scale, required: true},
-                {prompt: "The speaker is COMPETENT.", name: 'competent', labels: likert_scale, required: true},
+                {prompt: "The speaker is EXPRESSIVE.", name: 'expressive', labels: likert_scale, required: true},
+                {prompt: "The speaker is CASUAL.", name: 'casual', labels: likert_scale, required: true},
                 {prompt: "The speaker is EASYGOING.", name: 'easygoing', labels: likert_scale, required: true}
                 ];
 let attributes = shuffle_array(raw_attributes);
@@ -434,8 +434,8 @@ var emotion = {
 };
 timeline.push(emotion);
 
-/* previous study */
-const previous_study = {
+/* feedback about the study */
+const study_feedback = {
   type: jsPsychSurvey,
   pages: [
     [
@@ -445,12 +445,37 @@ const previous_study = {
         name: 'previous_study',
         options: ['Yes', 'No', 'I am not sure'],
         required: true,
+      },
+      {
+        type: 'multi-choice',
+        prompt: 'Did you read the instructions and do you think you did the task correctly?',
+        name: 'instructions_correct',
+        options: ['Yes', 'No', 'I was confused']
+      },
+      {
+        type: 'drop-down',
+        prompt: 'Do you think the payment was fair?',
+        name: 'fair',
+        options: ['The payment was too low', 'The payment was fair']
+      },
+      {
+        type: 'drop-down',
+        prompt: 'Did you enjoy the experiment?',
+        name: 'enjoy',
+        options: ['Worse than the average experiment', 'An average experiment', 'Better than the average experiment']
+      },
+      {
+        type: 'text',
+        prompt: 'Do you have any other comments about this experiment?',
+        name: 'comments',
+        textbox_columns: 30,
+        textbox_rows: 4
       }
     ]
   ],
   button_label_finish: 'Continue',
 };
-timeline.push(previous_study);
+timeline.push(study_feedback);
 
 /* payment information */
 const payment = {
