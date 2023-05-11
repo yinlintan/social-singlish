@@ -11,14 +11,14 @@ let trial_objects = [
     },
     {
         "stimulus": "audio/F1_03.wav",
-        "clip": "F1_02",
+        "clip": "F1_03",
         "speaker": "F1"
     },
-    // {
-    //     "stimulus": "audio/F1_04.wav",
-    //     "clip": "F1_02",
-    //     "speaker": "F1"
-    // },
+    {
+        "stimulus": "audio/F1_04.wav",
+        "clip": "F1_04",
+        "speaker": "F1"
+    },
     // {
     //     "stimulus": "audio/F2_01.wav",
     //     "clip": "F2_01",

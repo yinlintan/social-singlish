@@ -8,7 +8,7 @@ function evaluate_response(data) {
         } else  {
             data.result = "hit"
         }
-    }
+    };
 
 /* 
 determine_order([{}, {}])
@@ -26,7 +26,8 @@ function create_tv_array(json_object) {
         obj = {};
         obj.stimulus = json_object[i].stimulus;
         obj.data = {};
-        obj.data.correct = json_object[i].correct;
+        obj.data.clip = json_object[i].clip;
+        obj.data.speaker = json_object[i].speaker;
         tv_array.push(obj)
     }
     return tv_array;
