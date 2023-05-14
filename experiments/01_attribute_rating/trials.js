@@ -200,23 +200,23 @@ let trial_objects = [
     //     "speaker": "M5"
     // },
     // {
-    //     "stimulus": "attention_check_01",
+    //     "stimulus": "audio/stronglyagree.wav",
     //     "clip": "stronglyagree",
     //     "speaker": "attention_check"
     // },
     // {
-    //     "stimulus": "attention_check_02",
-    //     "clip": "agree",
+    //     "stimulus": "audio/somewhatagree.wav",
+    //     "clip": "somewhatagree",
     //     "speaker": "attention_check"
     // },
     // {
-    //     "stimulus": "attention_check_03",
+    //     "stimulus": "audio/stronglydisagree.wav",
+    //     "clip": "stronglydisagree",
+    //     "speaker": "attention_check"
+    // },
+    // {
+    //     "stimulus": "audio/somewhatdisagree.wav",
     //     "clip": "somewhatdisagree",
-    //     "speaker": "attention_check"
-    // },
-    // {
-    //     "stimulus": "attention_check_04",
-    //     "clip": "neutral",
     //     "speaker": "attention_check"
     // }
 ]
