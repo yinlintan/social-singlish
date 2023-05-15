@@ -137,7 +137,7 @@ const trials = {
               return attributes
             },
             on_finish: function(data) {
-              jsPsych.setProgressBar(data.trial_index/13)
+              jsPsych.setProgressBar(data.trial_index/49)
             },
             data: jsPsych.timelineVariable('data')
         },
@@ -147,305 +147,305 @@ const trials = {
 timeline.push(trials);
 
 /* survey 1: demographic questions */
-// const survey1 = {
-//   type: jsPsychSurvey,
-//   pages: [
-//     [
-//       {
-//         type: 'html',
-//         prompt: `<p style="color: #000000">Please answer the following questions:</p>`,
-//       },
-//       {
-//         type: 'multi-choice',
-//         prompt: "What is your citizenship status?",
-//         name: 'citizenship',
-//         options: ['Singaporean', 'Singapore PR', 'None of the above', 'Prefer not to answer'],
-//         required: true
-//       },
-//       {
-//         type: 'multi-choice',
-//         prompt: "What is your gender?",
-//         name: 'gender',
-//         options: ['Male', 'Female', 'Non-binary', 'Other', 'Prefer not to answer'],
-//         required: false,
-//       },
-//       {
-//         type: 'drop-down',
-//         prompt: "What year were you born?",
-//         name: 'age',
-//         options: ['2005', '2004', '2003', '2002', '2001', '2000', '1999', '1998', '1997', '1996', '1995', '1994', '1993', '1992', '1991', '1990', '1989', '1988', '1987', '1986', '1985', '1984', '1983', '1982', '1981', '1980', '1979', '1978', '1977', '1976', '1975', '1974', '1973', '1972', '1971', '1970', '1969', '1968', '1967', '1966', '1965', '1964', '1963', '1962', '1961', '1960', '1959', '1958', '1957', '1956', '1955', '1954', '1953', '1952', '1951', '1950', '1949', '1948', '1947', '1946', '1945', '1944', '1943', '1942', '1941', '1940', '1939', '1938', '1937', '1936', '1935', '1934', '1933', 'Prefer not to answer'],
-//         required: true,
-//       },
-//       {
-//         type: 'multi-select',
-//         prompt: "What is your race? Please select all that apply.",
-//         name: 'race',
-//         options: ['Chinese', 'Malay', 'Indian', 'Other', 'Prefer not to answer'],
-//         required: true,
-//       },
-//       {
-//         type: 'text',
-//         prompt: "What is your estimated total monthly household income (in Singapore dollars)?",
-//         name: 'income',
-//         textbox_columns: 8,
-//         input_type: "number",
-//         required: true,
-//       },
-//       {
-//         type: 'multi-choice',
-//         prompt: "What is your highest level of education?",
-//         name: 'education',
-//         options: ['No qualification', 'Primary school', 'Secondary school', 'Junior college/Polytechnic', 'Undergraduate degree', 'Postgraduate degree', 'Prefer not to answer'],
-//         required: false,
-//       }
-//     ]
-//   ],
-//   button_label_finish: 'Continue',
-// };
-// timeline.push(survey1);
+const survey1 = {
+  type: jsPsychSurvey,
+  pages: [
+    [
+      {
+        type: 'html',
+        prompt: `<p style="color: #000000">Please answer the following questions:</p>`,
+      },
+      {
+        type: 'multi-choice',
+        prompt: "What is your citizenship status?",
+        name: 'citizenship',
+        options: ['Singaporean', 'Singapore PR', 'None of the above', 'Prefer not to answer'],
+        required: true
+      },
+      {
+        type: 'multi-choice',
+        prompt: "What is your gender?",
+        name: 'gender',
+        options: ['Male', 'Female', 'Non-binary', 'Other', 'Prefer not to answer'],
+        required: false,
+      },
+      {
+        type: 'drop-down',
+        prompt: "What year were you born?",
+        name: 'age',
+        options: ['2005', '2004', '2003', '2002', '2001', '2000', '1999', '1998', '1997', '1996', '1995', '1994', '1993', '1992', '1991', '1990', '1989', '1988', '1987', '1986', '1985', '1984', '1983', '1982', '1981', '1980', '1979', '1978', '1977', '1976', '1975', '1974', '1973', '1972', '1971', '1970', '1969', '1968', '1967', '1966', '1965', '1964', '1963', '1962', '1961', '1960', '1959', '1958', '1957', '1956', '1955', '1954', '1953', '1952', '1951', '1950', '1949', '1948', '1947', '1946', '1945', '1944', '1943', '1942', '1941', '1940', '1939', '1938', '1937', '1936', '1935', '1934', '1933', 'Prefer not to answer'],
+        required: true,
+      },
+      {
+        type: 'multi-select',
+        prompt: "What is your race? Please select all that apply.",
+        name: 'race',
+        options: ['Chinese', 'Malay', 'Indian', 'Other', 'Prefer not to answer'],
+        required: true,
+      },
+      {
+        type: 'text',
+        prompt: "What is your estimated total monthly household income (in Singapore dollars)?",
+        name: 'income',
+        textbox_columns: 8,
+        input_type: "number",
+        required: true,
+      },
+      {
+        type: 'multi-choice',
+        prompt: "What is your highest level of education?",
+        name: 'education',
+        options: ['No qualification', 'Primary school', 'Secondary school', 'Junior college/Polytechnic', 'Undergraduate degree', 'Postgraduate degree', 'Prefer not to answer'],
+        required: false,
+      }
+    ]
+  ],
+  button_label_finish: 'Continue',
+};
+timeline.push(survey1);
 
-// /* survey 2: language background questions */
-// const survey2a = {
-//   type: jsPsychSurveyHtmlForm,
-//   preamble: `<p>What languages do you speak?</p>
-//   <p>Please indicate up to 5 languages and list them <b>in order of descending frequency of use</b>, i.e., Language 1 is the most frequently spoken language, Language 2 the second-most frequently spoken language, and so on.</p>
-//   <p>For example, if English is Language 1, Malay is Language 2, and Hokkien is Language 3, that means you speak English the most frequently, Malay the second-most frequently, and Hokkien the least frequently.
-//   </p>`,
-//   html: `<p>
-//   <input name="lang1" type="text" placeholder="Language 1" required><BR><BR>
-//   <input name="lang2" type="text" placeholder="Language 2"><BR><BR>
-//   <input name="lang3" type="text" placeholder="Language 3"><BR><BR>
-//   <input name="lang4" type="text" placeholder="Language 4"><BR><BR>
-//   <input name="lang5" type="text" placeholder="Language 5">
-//   </p>`
-// };
-// timeline.push(survey2a);
+/* survey 2: language background questions */
+const survey2a = {
+  type: jsPsychSurveyHtmlForm,
+  preamble: `<p>What languages do you speak?</p>
+  <p>Please indicate up to 5 languages and list them <b>in order of descending frequency of use</b>, i.e., Language 1 is the most frequently spoken language, Language 2 the second-most frequently spoken language, and so on.</p>
+  <p>For example, if English is Language 1, Malay is Language 2, and Hokkien is Language 3, that means you speak English the most frequently, Malay the second-most frequently, and Hokkien the least frequently.
+  </p>`,
+  html: `<p>
+  <input name="lang1" type="text" placeholder="Language 1" required><BR><BR>
+  <input name="lang2" type="text" placeholder="Language 2"><BR><BR>
+  <input name="lang3" type="text" placeholder="Language 3"><BR><BR>
+  <input name="lang4" type="text" placeholder="Language 4"><BR><BR>
+  <input name="lang5" type="text" placeholder="Language 5">
+  </p>`
+};
+timeline.push(survey2a);
 
-// const survey2b = {
-//   type: jsPsychSurvey,
-//   pages: [
-//     [
-//       {
-//         type: 'multi-choice',
-//         prompt: "Do you speak Singlish?",
-//         name: 'singlish',
-//         options: ['Yes', 'No'],
-//         required: true,
-//       },
-//       {
-//         type: 'text',
-//         prompt: "How many hours a day do you spend interacting in Singlish?",
-//         name: 'singlish_hours',
-//         input_type: "number",
-//         required: true,
-//       },
-//       {
-//         type: 'multi-choice',
-//         prompt: "Do your friends speak Singlish?",
-//         name: 'singlish_friends',
-//         options: ['Yes', 'No'],
-//         required: true,
-//       },
-//       {
-//         type: 'likert',
-//         prompt: "How often do your friends speak Singlish?",
-//         name: 'singlish_friends_frequency',
-//         required: true,
-//         likert_scale_min_label: 'Never',
-//         likert_scale_max_label: 'All the time',
-//         likert_scale_values: [
-//           { value: 1 },
-//           { value: 2 },
-//           { value: 3 },
-//           { value: 4 },
-//           { value: 5 }
-//         ]
-//       },
-//       {
-//         type: 'multi-choice',
-//         prompt: "Does your family speak Singlish?",
-//         name: 'singlish_family',
-//         options: ['Yes', 'No'],
-//         required: true,
-//       },
-//       {
-//         type: 'likert',
-//         prompt: "How often does your family speak Singlish?",
-//         name: 'singlish_family_frequency',
-//         required: true,
-//         likert_scale_min_label: 'Never',
-//         likert_scale_max_label: 'All the time',
-//         likert_scale_values: [
-//           { value: 1 },
-//           { value: 2 },
-//           { value: 3 },
-//           { value: 4 },
-//           { value: 5 }
-//         ]
-//       },
-//     ],
-//   ],
-//   button_label_finish: 'Continue',
-// };
-// timeline.push(survey2b);
+const survey2b = {
+  type: jsPsychSurvey,
+  pages: [
+    [
+      {
+        type: 'multi-choice',
+        prompt: "Do you speak Singlish?",
+        name: 'singlish',
+        options: ['Yes', 'No'],
+        required: true,
+      },
+      {
+        type: 'text',
+        prompt: "How many hours a day do you spend interacting in Singlish?",
+        name: 'singlish_hours',
+        input_type: "number",
+        required: true,
+      },
+      {
+        type: 'multi-choice',
+        prompt: "Do your friends speak Singlish?",
+        name: 'singlish_friends',
+        options: ['Yes', 'No'],
+        required: true,
+      },
+      {
+        type: 'likert',
+        prompt: "How often do your friends speak Singlish?",
+        name: 'singlish_friends_frequency',
+        required: true,
+        likert_scale_min_label: 'Never',
+        likert_scale_max_label: 'All the time',
+        likert_scale_values: [
+          { value: 1 },
+          { value: 2 },
+          { value: 3 },
+          { value: 4 },
+          { value: 5 }
+        ]
+      },
+      {
+        type: 'multi-choice',
+        prompt: "Does your family speak Singlish?",
+        name: 'singlish_family',
+        options: ['Yes', 'No'],
+        required: true,
+      },
+      {
+        type: 'likert',
+        prompt: "How often does your family speak Singlish?",
+        name: 'singlish_family_frequency',
+        required: true,
+        likert_scale_min_label: 'Never',
+        likert_scale_max_label: 'All the time',
+        likert_scale_values: [
+          { value: 1 },
+          { value: 2 },
+          { value: 3 },
+          { value: 4 },
+          { value: 5 }
+        ]
+      },
+    ],
+  ],
+  button_label_finish: 'Continue',
+};
+timeline.push(survey2b);
 
-// /* survey 3: open-ended singlish questions
+/* survey 3: open-ended singlish questions
 
-// const survey3a = {
-//   type: jsPsychSurveyHtmlForm,
-//   preamble: '<p>List three attributes to describe the speakers that sounded more Singlish:</p>',
-//   html: '<p><input name="word1" class="try" type="text" placeholder="Word 1" required><BR><BR><input name="word2" type="text" placeholder="Word 2" required><BR><BR><input name="word3" type="text" placeholder="Word 3" required></p>'
-// };
-// timeline.push(survey3a);
-// */
+const survey3a = {
+  type: jsPsychSurveyHtmlForm,
+  preamble: '<p>List three attributes to describe the speakers that sounded more Singlish:</p>',
+  html: '<p><input name="word1" class="try" type="text" placeholder="Word 1" required><BR><BR><input name="word2" type="text" placeholder="Word 2" required><BR><BR><input name="word3" type="text" placeholder="Word 3" required></p>'
+};
+timeline.push(survey3a);
+*/
 
-// const survey3b = {
-//   type: jsPsychSurvey,
-//   pages: [
-//     [
-//       {
-//         type: 'text',
-//         prompt: "In your opinion, when and/or where is it acceptable to use Singlish? When and/or where is it not acceptable to use Singlish?",
-//         name: 'singlish_acceptability',
-//         required: true,
-//       },
-//       {
-//         type: 'text',
-//         prompt: "What is Singlish? Give a definition.",
-//         name: 'singlish_definition',
-//         required: true,
-//       },
-//       {
-//         type: 'multi-choice',
-//         prompt: "How important do you think Singlish is?",
-//         name: 'singlish_important',
-//         options: ['Very important', 'Important', 'Neutral', 'Not important', 'Not important at all'],
-//         required: true,
-//       }
-//     ]
-//   ],
-//   button_label_finish: 'Continue',
-// };
-// timeline.push(survey3b);
+const survey3b = {
+  type: jsPsychSurvey,
+  pages: [
+    [
+      {
+        type: 'text',
+        prompt: "In your opinion, when and/or where is it acceptable to use Singlish? When and/or where is it not acceptable to use Singlish?",
+        name: 'singlish_acceptability',
+        required: true,
+      },
+      {
+        type: 'text',
+        prompt: "What is Singlish? Give a definition.",
+        name: 'singlish_definition',
+        required: true,
+      },
+      {
+        type: 'multi-choice',
+        prompt: "How important do you think Singlish is?",
+        name: 'singlish_important',
+        options: ['Very important', 'Important', 'Neutral', 'Not important', 'Not important at all'],
+        required: true,
+      }
+    ]
+  ],
+  button_label_finish: 'Continue',
+};
+timeline.push(survey3b);
 
-// /* survey 4: language attitude questions */
-// var likert_scale_singlish = [
-//   "Strongly Disagree",
-//   "Disagree",
-//   "Neutral",
-//   "Agree",
-//   "Strongly Agree"
-// ];
+/* survey 4: language attitude questions */
+var likert_scale_singlish = [
+  "Strongly Disagree",
+  "Disagree",
+  "Neutral",
+  "Agree",
+  "Strongly Agree"
+];
 
-// const survey4 = {
-//   type: jsPsychSurveyLikert,
-//   preamble: `Please rate how much you agree or disagree with the following statements.`,
-//   questions: [
-//     { prompt: "Singlish is just bad English.", name: 'likert_badenglish', labels: likert_scale_singlish, required: true },
-//     { prompt: "Singlish is the only thing that really makes us Singaporean.", name: 'likert_singaporean', labels: likert_scale_singlish, required: true },
-//     { prompt: "Singlish unites the different races of Singapore.", name: 'likert_race', labels: likert_scale_singlish, required: true },
-//     { prompt: "It would be better for Singapore if Singlish did not exist.", name: 'likert_exist', labels: likert_scale_singlish, required: true },
-//   ],
-//   randomize_question_order: true,
-// };
-// timeline.push(survey4);
+const survey4 = {
+  type: jsPsychSurveyLikert,
+  preamble: `Please rate how much you agree or disagree with the following statements.`,
+  questions: [
+    { prompt: "Singlish is just bad English.", name: 'likert_badenglish', labels: likert_scale_singlish, required: true },
+    { prompt: "Singlish is the only thing that really makes us Singaporean.", name: 'likert_singaporean', labels: likert_scale_singlish, required: true },
+    { prompt: "Singlish unites the different races of Singapore.", name: 'likert_race', labels: likert_scale_singlish, required: true },
+    { prompt: "It would be better for Singapore if Singlish did not exist.", name: 'likert_exist', labels: likert_scale_singlish, required: true },
+  ],
+  randomize_question_order: true,
+};
+timeline.push(survey4);
 
-// /* emotion scale */
-// var emotion = {
-//   type: jsPsychSurveyLikert,
-//   scale_width: 700,
-//   questions: [
-//     {
-//       prompt: `
-//       <p style="font-weight: 500">How do you feel right now? Please indicate how you are feeling using the following scale.</p>
-//       <center><img src="images/emotionscale.png"></center>
-//       `, 
-//       labels: [
-//         "1", 
-//         "2", 
-//         "3", 
-//         "4", 
-//         "5"
-//       ]
-//     }
-//   ]
-// };
-// timeline.push(emotion);
+/* emotion scale */
+var emotion = {
+  type: jsPsychSurveyLikert,
+  scale_width: 700,
+  questions: [
+    {
+      prompt: `
+      <p style="font-weight: 500">How do you feel right now? Please indicate how you are feeling using the following scale.</p>
+      <center><img src="images/emotionscale.png"></center>
+      `, 
+      labels: [
+        "1", 
+        "2", 
+        "3", 
+        "4", 
+        "5"
+      ]
+    }
+  ]
+};
+timeline.push(emotion);
 
-// /* feedback about the study */
-// const study_feedback = {
-//   type: jsPsychSurvey,
-//   pages: [
-//     [
-//       {
-//         type: 'multi-choice',
-//         prompt: "Did you participate in the previous Singlish study (located at https://bit.ly/stanfordsinglish)?",
-//         name: 'previous_study',
-//         options: ['Yes', 'No', 'I am not sure'],
-//         required: true,
-//       },
-//       {
-//         type: 'multi-choice',
-//         prompt: 'Did you read the instructions and do you think you did the task correctly?',
-//         name: 'instructions_correct',
-//         options: ['Yes', 'No', 'I was confused']
-//       },
-//       {
-//         type: 'drop-down',
-//         prompt: 'Do you think the payment was fair?',
-//         name: 'fair',
-//         options: ['The payment was too low', 'The payment was fair']
-//       },
-//       {
-//         type: 'drop-down',
-//         prompt: 'Did you enjoy the experiment?',
-//         name: 'enjoy',
-//         options: ['Worse than the average experiment', 'An average experiment', 'Better than the average experiment']
-//       },
-//       {
-//         type: 'text',
-//         prompt: 'Do you have any other comments about this experiment?',
-//         name: 'comments',
-//         textbox_columns: 30,
-//         textbox_rows: 4
-//       }
-//     ]
-//   ],
-//   button_label_finish: 'Continue',
-// };
-// timeline.push(study_feedback);
+/* feedback about the study */
+const study_feedback = {
+  type: jsPsychSurvey,
+  pages: [
+    [
+      {
+        type: 'multi-choice',
+        prompt: "Did you participate in the previous Singlish study (located at https://bit.ly/stanfordsinglish)?",
+        name: 'previous_study',
+        options: ['Yes', 'No', 'I am not sure'],
+        required: true,
+      },
+      {
+        type: 'multi-choice',
+        prompt: 'Did you read the instructions and do you think you did the task correctly?',
+        name: 'instructions_correct',
+        options: ['Yes', 'No', 'I was confused']
+      },
+      {
+        type: 'drop-down',
+        prompt: 'Do you think the payment was fair?',
+        name: 'fair',
+        options: ['The payment was too low', 'The payment was fair']
+      },
+      {
+        type: 'drop-down',
+        prompt: 'Did you enjoy the experiment?',
+        name: 'enjoy',
+        options: ['Worse than the average experiment', 'An average experiment', 'Better than the average experiment']
+      },
+      {
+        type: 'text',
+        prompt: 'Do you have any other comments about this experiment?',
+        name: 'comments',
+        textbox_columns: 30,
+        textbox_rows: 4
+      }
+    ]
+  ],
+  button_label_finish: 'Continue',
+};
+timeline.push(study_feedback);
 
-// /* payment information */
-// const payment = {
-//   type: jsPsychSurveyText,
-//   questions: [
-//     {
-//       prompt: `
-//             <p>Please provide your email address in the field below for participant reimbursement purposes.</p>
-//             `,
-//       name: 'payment'
-//     }
-//   ]
-// };
-// timeline.push(payment);
+/* payment information */
+const payment = {
+  type: jsPsychSurveyText,
+  questions: [
+    {
+      prompt: `
+            <p>Please provide your email address in the field below for participant reimbursement purposes.</p>
+            `,
+      name: 'payment'
+    }
+  ]
+};
+timeline.push(payment);
 
-// /* future study? */
-// const futurestudies = {
-//   type: jsPsychSurvey,
-//   pages: [
-//     [
-//       {
-//         type: 'multi-choice',
-//         prompt: "Do you consent to being contacted for future studies?",
-//         name: 'futurestudies',
-//         options: ['Yes', 'No'],
-//         required: true,
-//       }
-//     ]
-//   ],
-//   button_label_finish: 'Continue',
-// };
-// timeline.push(futurestudies);
+/* future study? */
+const futurestudies = {
+  type: jsPsychSurvey,
+  pages: [
+    [
+      {
+        type: 'multi-choice',
+        prompt: "Do you consent to being contacted for future studies?",
+        name: 'futurestudies',
+        options: ['Yes', 'No'],
+        required: true,
+      }
+    ]
+  ],
+  button_label_finish: 'Continue',
+};
+timeline.push(futurestudies);
 
 /* thank u */
 const thankyou = {
