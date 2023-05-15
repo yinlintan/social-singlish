@@ -137,7 +137,7 @@ const trials = {
               return attributes
             },
             on_finish: function(data) {
-              jsPsych.setProgressBar(data.trial_index/49)
+              jsPsych.setProgressBar(data.trial_index/93)
             },
             data: jsPsych.timelineVariable('data')
         },
