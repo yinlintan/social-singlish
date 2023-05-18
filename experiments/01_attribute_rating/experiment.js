@@ -40,7 +40,7 @@ const intro1 = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus:  `<p>Only complete this study if you are a Singaporean citizen or Singapore Permanent Resident (PR) who is 18 years old or older.</p>
             <p>Please share this link with other Singaporean citizens and Singapore PRs, but do not participate in this study more than once. You will not be compensated more than once.</p>
-            <p>This experiment will take no more than 40 minutes and you will be compensated XX SGD upon completion.</p>
+            <p>This experiment will take no more than 20 minutes and you will be compensated 4 SGD upon completion.</p>
             <p>Press the SPACE BAR to continue.</p>`,
     choices: [" "],
 };
@@ -72,6 +72,7 @@ timeline.push(soundcheck);
 const instructions = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus:  `In this experiment, you will listen to short audio clips.
+    <BR><BR>These clips consist of short phrases or sentences.
     <BR><BR>After listening to each clip, please indicate how much you agree or disagree with the provided statements.
     <BR><BR>Press the SPACE BAR to continue.`,
     choices: [" "]
@@ -94,12 +95,12 @@ let stimuli = shuffle_array(tv_array);
 
 /* create array of attributes and randomize attribute order per participant */
 let raw_attributes = [
-                {prompt: "The speaker is PROFESSIONAL.", name: 'professional', labels: likert_scale, required: true},
                 {prompt: "The speaker is HONEST.", name: 'honest', labels: likert_scale, required: true},
                 {prompt: "The speaker is ROUGH.", name: 'rough', labels: likert_scale, required: true},
-                {prompt: "The speaker is EXPRESSIVE.", name: 'expressive', labels: likert_scale, required: true},
                 {prompt: "The speaker is CASUAL.", name: 'casual', labels: likert_scale, required: true},
-                {prompt: "The speaker is EASYGOING.", name: 'easygoing', labels: likert_scale, required: true}
+                {prompt: "The speaker is EASYGOING.", name: 'easygoing', labels: likert_scale, required: true},
+                {prompt: "The speaker is PROPER.", name: 'proper', labels: likert_scale, required: true},
+                {prompt: "The speaker is FAST-SPEAKING.", name: 'fastspeaking', labels: likert_scale, required: true}
                 ];
 let attributes = shuffle_array(raw_attributes);
 
