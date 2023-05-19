@@ -2,7 +2,7 @@ const jsPsych = initJsPsych({
     show_progress_bar: true,
     auto_update_progress_bar: false,
     on_finish: function () {
-        jsPsych.data.displayData('csv');
+        //jsPsych.data.displayData('csv');
         window.location = "https://yinlintan.github.io/social-singlish/experiments/01_attribute_rating/thanks.html";
         proliferate.submit({ "trials": jsPsych.data.get().values() });
       }
