@@ -37,23 +37,23 @@ timeline.push(irb);
 
 /* eligibility */
 const intro1 = {
-    type: jsPsychHtmlKeyboardResponse,
+    type: jsPsychHtmlButtonResponse,
     stimulus:  `<p>Only complete this study if you are a Singaporean citizen or Singapore Permanent Resident (PR) who is 18 years old or older.</p>
             <p>Please share this link with other Singaporean citizens and Singapore PRs, but do not participate in this study more than once. You will not be compensated more than once.</p>
             <p>This experiment will take no more than 20 minutes and you will be compensated 4 SGD upon completion.</p>
-            <p>Press the SPACE BAR to continue.</p>`,
-    choices: [" "],
+            <p>Click CONTINUE to proceed.</p>`,
+    choices: ['Continue'],
 };
 timeline.push(intro1);
 
 /* instructions */
 const intro2 = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus:  `Please make sure that you are completing this experiment in a quiet room.
-    <BR><BR>This experiment should be completed on a desktop or laptop using the Google Chrome browser.
-    <BR><BR>You should use earphones or headphones for the duration of this experiment.
-    <BR><BR>Press the SPACE BAR to continue.`,
-    choices: [" "],
+    type: jsPsychHtmlButtonResponse,
+    stimulus:  `<p>Please make sure that you are completing this experiment in a quiet room.</p>
+    <p>This experiment should be completed on a desktop or laptop using the Google Chrome browser.</p>
+    <p>You should use earphones or headphones for the duration of this experiment.</p>
+    <p>Click CONTINUE to proceed.</p>`,
+    choices: ['Continue'],
 };
 timeline.push(intro2);
 
@@ -70,12 +70,12 @@ const soundcheck = {
 timeline.push(soundcheck);
 
 const instructions = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus:  `In this experiment, you will listen to short audio clips.
-    <BR><BR>These clips consist of short phrases or sentences.
-    <BR><BR>After listening to each clip, please indicate how much you agree or disagree with the provided statements.
-    <BR><BR>Press the SPACE BAR to continue.`,
-    choices: [" "]
+    type: jsPsychHtmlButtonResponse,
+    stimulus:  `<p>In this experiment, you will listen to short audio clips.</p>
+    <p>These clips consist of short phrases or sentences.</p>
+    <p>After listening to each clip, please indicate how much you agree or disagree with the provided statements.</p>
+    <p>Click CONTINUE to proceed.</p>`,
+    choices: ['Continue']
 };
 timeline.push(instructions);
 
