@@ -16,12 +16,14 @@ const preload_trial = {
     audio: preload_array
 };
 
+/*
 const stopCollection = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: '<p>This study is currently not accepting new participants. Please check back again in the future.</p>',
     choices: "NO_KEYS",
 };
 timeline.push(stopCollection);
+*/
 
 const irb = {
     type: jsPsychHtmlButtonResponse,
