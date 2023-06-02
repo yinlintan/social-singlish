@@ -3,6 +3,9 @@
 library(tidyverse)
 library(brms)
 library(dplyr)
+library(boot)
+theme_set(theme_bw())
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") 
 
 # load data
 # the recode file has +1 on all raw values, i.e., 0 -> 1, 1 -> 2, etc.
@@ -20,88 +23,331 @@ art_data$fastspeaking <- factor(art_data$fastspeaking, ordered=TRUE)
 art_data = art_data %>% 
   mutate(c.clip_score = as.numeric(clip_score) - mean(as.numeric(clip_score)))
 
+### DECIDING WHICH MODEL TO USE? ###
+
 # cumulative link model
-## rough
-m.rough = brm(rough ~ c.clip_score + (1|clip) + (1|id) + (1|speaker),
+
+## model with random slope for Singlish score by participant
+m.logit = brm(rough ~ c.clip_score + (1|clip) + (1+c.clip_score|id) + (1|speaker),
               data=art_data,
               family=cumulative(),
               cores=4)
-summary(m.rough)
-h.rough <- hypothesis(m.rough, "c.clip_score > 0")
-print(h.rough, digits = 4)
-## honest
-m.honest = brm(honest ~ c.clip_score + (1|clip) + (1|id) + (1|speaker),
+summary(m.logit)
+# what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
+h.logit <- hypothesis(m.logit, "c.clip_score > 0")
+print(h.logit, digits = 4)
+
+## model with random intercept for participant
+m.logit.int = brm(rough ~ c.clip_score + (1|clip) + (1|id) + (1|speaker),
               data=art_data,
               family=cumulative(),
               cores=4)
-summary(m.honest)
-h.honest <- hypothesis(m.honest, "c.clip_score > 0")
-print(h.honest, digits = 4)
+summary(m.logit.int)
+# what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
+h.logit.int <- hypothesis(m.logit.int, "c.clip_score > 0")
+print(h.logit.int, digits = 4)
+
+## deciding which model is better? (1+c.clip_score|id) or (1|id)
+loo(m.logit,m.logit.int)
+# LOOIC difference is not more than twice the standard error
+## here, we will use the more theoretically sensible model, i.e., with (1+c.clip_score|id)
 
 # adjacent category model
-m.acat = brm(rough ~ c.clip_score + (1|clip) + (1|id) + (1|speaker),
+m.acat = brm(rough ~ c.clip_score + (1|clip) + (1+c.clip_score|id) + (1|speaker),
              data=art_data,
              family=acat(),
              cores=4)
 summary(m.acat)
+h.acat <- hypothesis(m.acat, "c.clip_score > 0")
+print(h.acat, digits = 4)
 
-## VISUALIZING DATA ##
+## decide whether to use cumulative link or adjacent category model?
+loo(m.logit,m.acat)
+# LOOIC difference is not more than twice the standard error
+## we will use the model with a lower LOOIC estimate, i.e., the cumulative link model
+
+### ACTUAL MODEL -- CUMULATIVE LINK ORDINAL REGRESSION MODEL ###
+# Dependent Variable: Attribute Rating
+# Fixed effect: Singlish (Markhov) score (c.clip_score)
+# Random effects: random intercept of speaker and clip, random by participant slope for Singlish score
+
+## Rough
+m.rough = brm(honest ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+               data=art_data,
+               family=cumulative(),
+               cores=4)
+summary(m.rough)
+# what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
+m.rough <- hypothesis(m.rough, "c.clip_score > 0")
+print(m.rough, digits = 4)
+
+## honest
+m.honest = brm(honest ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+              data=art_data,
+              family=cumulative(),
+              cores=4)
+summary(m.honest)
+# what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
+h.honest <- hypothesis(m.honest, "c.clip_score > 0")
+print(h.honest, digits = 4)
+
+### VISUALIZING DATA ###
 
 # plotting attribute ratings on y-axis and clip score on x-axis
+
+# rename rating levels first
 
 ## rough
 ggplot(art_data, aes(x=clip_score,y=rough)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
-  labs(title="Rating for 'Rough' vs Singlish Markhov score")
+  labs(title="Relationship between Singlish score and ROUGH", x="Singlish score", y="This speaker is ROUGH.")
 ## casual
 ggplot(art_data, aes(x=clip_score,y=casual)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
-  labs(title="Rating for 'Casual' vs Singlish Markhov score")
+  labs(title="Relationship between Singlish score and CASUAL", x="Singlish score", y="This speaker is CASUAL.")
 ## honest
 ggplot(art_data, aes(x=clip_score,y=honest)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
-  labs(title="Rating for 'Honest' vs Singlish Markhov score")
+  labs(title="Relationship between Singlish score and HONEST", x="Singlish score", y="This speaker is HONEST.")
 ## easygoing
 ggplot(art_data, aes(x=clip_score,y=easygoing)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
-  labs(title="Rating for 'Easygoing' vs Singlish Markhov score")
+  labs(title="Relationship between Singlish score and EASYGOING", x="Singlish score", y="This speaker is EASYGOING.")
 ## proper
 ggplot(art_data, aes(x=clip_score,y=proper)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
-  labs(title="Rating for 'Proper' vs Singlish Markhov score")
+  labs(title="Relationship between Singlish score and PROPER", x="Singlish score", y="This speaker is PROPER.")
 ## fast-speaking
 ggplot(art_data, aes(x=clip_score,y=fastspeaking)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
-  labs(title="Rating for 'Fast-speaking' vs Singlish Markhov score")
+  labs(title="Relationship between Singlish score and FAST-SPEAKING", x="Singlish score", y="This speaker is FAST-SPEAKING.")
 
-# plot proportion of responses by clip score
-agr = art_data %>% 
-  select(c.clip_score,clip,speaker) %>% 
-  mutate(One = case_when("rough" == 1 ~ 1,
+# plot mean rating for each attribute
+
+## rough
+agr_rough = art_data %>% 
+  select(rough, c.clip_score) %>% 
+  mutate(StronglyDisagree = case_when(rough == 1 ~ 1,
                          TRUE ~ 0),
-         Two = case_when("rough" == 2 ~ 1,
+         Disagree = case_when(rough == 2 ~ 1,
                          TRUE ~ 0),
-         Three = case_when("rough" == 3 ~ 1,
+         SomewhatDisagree = case_when(rough == 3 ~ 1,
                            TRUE ~ 0),
-         Four = case_when("rough" == 4 ~ 1,
+         Neutral = case_when(rough == 4 ~ 1,
                           TRUE ~ 0),
-         Five = case_when("rough" == 5 ~ 1,
+         SomewhatAgree = case_when(rough == 5 ~ 1,
                           TRUE ~ 0),
-         Six = case_when("rough" == 6 ~ 1,
+         Agree = case_when(rough == 6 ~ 1,
                          TRUE ~ 0),
-         Seven = case_when("rough" == 7 ~ 1,
+         StronglyAgree = case_when(rough == 7 ~ 1,
                            TRUE ~ 0)) %>% 
-  pivot_longer(cols = One:Seven, names_to=c("Response"), values_to=c("Value"))
+  pivot_longer(cols = StronglyDisagree:StronglyAgree, names_to=c("Response"), values_to=c("Value"))
 
-agr_part = agr %>% 
-  group_by(c.clip_score,Response) %>% 
-  summarize(Mean = mean(Value), CILow=ci.low(Value), CIHigh = ci.high(Value)) %>% 
-  ungroup() %>% 
-  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh) %>% 
-  mutate(Rating = as.numeric(as.character(fct_recode(Response, "1"="One", "2"="Two","3"="Three","4"="Four","5"="Five","6"="Six","7"="Seven"))))
+sum_rough <- agr_rough %>%
+  group_by(Response) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(Value)),
+    sd=sd(as.numeric(Value))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+sum_rough$Response <- factor(sum_rough$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
+
+ggplot(sum_rough) +
+  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[1]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is ROUGH.", x = " ", y = "proportion", las=2) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+## honest
+agr_honest = art_data %>% 
+  select(honest, c.clip_score) %>% 
+  mutate(StronglyDisagree = case_when(honest == 1 ~ 1,
+                         TRUE ~ 0),
+         Disagree = case_when(honest == 2 ~ 1,
+                         TRUE ~ 0),
+         SomewhatDisagree = case_when(honest == 3 ~ 1,
+                           TRUE ~ 0),
+         Neutral = case_when(honest == 4 ~ 1,
+                          TRUE ~ 0),
+         SomewhatAgree = case_when(honest == 5 ~ 1,
+                          TRUE ~ 0),
+         Agree = case_when(honest == 6 ~ 1,
+                         TRUE ~ 0),
+         StronglyAgree = case_when(honest == 7 ~ 1,
+                           TRUE ~ 0)) %>% 
+  pivot_longer(cols = StronglyDisagree:StronglyAgree, names_to=c("Response"), values_to=c("Value"))
+
+sum_honest <- agr_honest %>%
+  group_by(Response) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(Value)),
+    sd=sd(as.numeric(Value))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+sum_honest$Response <- factor(sum_honest$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
+
+ggplot(sum_honest) +
+  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[2]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is HONEST.", x = " ", y = "proportion", las=2) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+## easygoing
+agr_easygoing = art_data %>% 
+  select(easygoing, c.clip_score) %>% 
+  mutate(StronglyDisagree = case_when(easygoing == 1 ~ 1,
+                                      TRUE ~ 0),
+         Disagree = case_when(easygoing == 2 ~ 1,
+                              TRUE ~ 0),
+         SomewhatDisagree = case_when(easygoing == 3 ~ 1,
+                                      TRUE ~ 0),
+         Neutral = case_when(easygoing == 4 ~ 1,
+                             TRUE ~ 0),
+         SomewhatAgree = case_when(easygoing == 5 ~ 1,
+                                   TRUE ~ 0),
+         Agree = case_when(easygoing == 6 ~ 1,
+                           TRUE ~ 0),
+         StronglyAgree = case_when(easygoing == 7 ~ 1,
+                                   TRUE ~ 0)) %>% 
+  pivot_longer(cols = StronglyDisagree:StronglyAgree, names_to=c("Response"), values_to=c("Value"))
+
+sum_easygoing <- agr_easygoing %>%
+  group_by(Response) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(Value)),
+    sd=sd(as.numeric(Value))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+sum_easygoing$Response <- factor(sum_easygoing$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
+
+ggplot(sum_easygoing) +
+  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[3]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is EASYGOING.", x = " ", y = "proportion", las=2) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+## casual
+agr_casual = art_data %>% 
+  select(casual, c.clip_score) %>% 
+  mutate(StronglyDisagree = case_when(casual == 1 ~ 1,
+                                      TRUE ~ 0),
+         Disagree = case_when(casual == 2 ~ 1,
+                              TRUE ~ 0),
+         SomewhatDisagree = case_when(casual == 3 ~ 1,
+                                      TRUE ~ 0),
+         Neutral = case_when(casual == 4 ~ 1,
+                             TRUE ~ 0),
+         SomewhatAgree = case_when(casual == 5 ~ 1,
+                                   TRUE ~ 0),
+         Agree = case_when(casual == 6 ~ 1,
+                           TRUE ~ 0),
+         StronglyAgree = case_when(casual == 7 ~ 1,
+                                   TRUE ~ 0)) %>% 
+  pivot_longer(cols = StronglyDisagree:StronglyAgree, names_to=c("Response"), values_to=c("Value"))
+
+sum_casual <- agr_casual %>%
+  group_by(Response) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(Value)),
+    sd=sd(as.numeric(Value))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+sum_casual$Response <- factor(sum_casual$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
+
+ggplot(sum_casual) +
+  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[4]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is CASUAL.", x = " ", y = "proportion", las=2) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+## fast-speaking
+agr_fastspeaking = art_data %>% 
+  select(fastspeaking, c.clip_score) %>% 
+  mutate(StronglyDisagree = case_when(fastspeaking == 1 ~ 1,
+                                      TRUE ~ 0),
+         Disagree = case_when(fastspeaking == 2 ~ 1,
+                              TRUE ~ 0),
+         SomewhatDisagree = case_when(fastspeaking == 3 ~ 1,
+                                      TRUE ~ 0),
+         Neutral = case_when(fastspeaking == 4 ~ 1,
+                             TRUE ~ 0),
+         SomewhatAgree = case_when(fastspeaking == 5 ~ 1,
+                                   TRUE ~ 0),
+         Agree = case_when(fastspeaking == 6 ~ 1,
+                           TRUE ~ 0),
+         StronglyAgree = case_when(fastspeaking == 7 ~ 1,
+                                   TRUE ~ 0)) %>% 
+  pivot_longer(cols = StronglyDisagree:StronglyAgree, names_to=c("Response"), values_to=c("Value"))
+
+sum_fastspeaking <- agr_fastspeaking %>%
+  group_by(Response) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(Value)),
+    sd=sd(as.numeric(Value))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+sum_fastspeaking$Response <- factor(sum_fastspeaking$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
+
+ggplot(sum_fastspeaking) +
+  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[5]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is FAST-SPEAKING.", x = " ", y = "proportion", las=2) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+## proper
+agr_proper = art_data %>% 
+  select(proper, c.clip_score) %>% 
+  mutate(StronglyDisagree = case_when(proper == 1 ~ 1,
+                                      TRUE ~ 0),
+         Disagree = case_when(proper == 2 ~ 1,
+                              TRUE ~ 0),
+         SomewhatDisagree = case_when(proper == 3 ~ 1,
+                                      TRUE ~ 0),
+         Neutral = case_when(proper == 4 ~ 1,
+                             TRUE ~ 0),
+         SomewhatAgree = case_when(proper == 5 ~ 1,
+                                   TRUE ~ 0),
+         Agree = case_when(proper == 6 ~ 1,
+                           TRUE ~ 0),
+         StronglyAgree = case_when(proper == 7 ~ 1,
+                                   TRUE ~ 0)) %>% 
+  pivot_longer(cols = StronglyDisagree:StronglyAgree, names_to=c("Response"), values_to=c("Value"))
+
+sum_proper <- agr_proper %>%
+  group_by(Response) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(Value)),
+    sd=sd(as.numeric(Value))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+sum_proper$Response <- factor(sum_proper$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
+
+ggplot(sum_proper) +
+  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[6]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is PROPER.", x = " ", y = "proportion", las=2) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
