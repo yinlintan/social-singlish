@@ -1,55 +1,8 @@
-### CUMULATIVE LINK MODEL FOR 'ROUGH'
-
- Family: cumulative 
-  Links: mu = logit; disc = identity 
-Formula: rough ~ c.clip_score + (1 | clip) + (1 | id) + (1 | speaker) 
-   Data: art_data (Number of observations: 1680) 
-  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-         total post-warmup draws = 4000
-
-Group-Level Effects: 
-~clip (Number of levels: 40) 
-              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.35      0.09     0.20     0.55 1.00     1021     1911
-
-~id (Number of levels: 42) 
-              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     1.12      0.14     0.88     1.43 1.01      845     1128
-
-~speaker (Number of levels: 10) 
-              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.72      0.26     0.33     1.36 1.01      813     1111
-
-Population-Level Effects: 
-             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept[1]    -5.61      0.38    -6.35    -4.84 1.00      741     1837
-Intercept[2]    -2.34      0.30    -2.93    -1.74 1.00      574     1324
-Intercept[3]    -0.63      0.29    -1.21    -0.06 1.00      538      977
-Intercept[4]     0.41      0.29    -0.16     0.98 1.00      544     1139
-Intercept[5]     2.24      0.30     1.66     2.83 1.00      574     1202
-Intercept[6]     4.51      0.33     3.87     5.18 1.00      745     1822
-c.clip_score    36.84     10.69    16.94    59.18 1.01     1109     1366
-
-Family Specific Parameters: 
-     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-disc     1.00      0.00     1.00     1.00   NA       NA       NA
-
-Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
-and Tail_ESS are effective sample size measures, and Rhat is the potential
-scale reduction factor on split chains (at convergence, Rhat = 1).
-
-## HYPOTHESIS FOR 'ROUGH'
-Hypothesis Tests for class b:
-          Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
-1 (c.clip_score) > 0  36.8418   10.6876  19.8428  55.3015        Inf         1    *
-
-########
-
-### CUMULATIVE LINK FOR 'HONEST' 
+### ROUGH -- MODEL ###
 
 Family: cumulative 
   Links: mu = logit; disc = identity 
-Formula: honest ~ c.clip_score + (1 | clip) + (1 | id) + (1 | speaker) 
+Formula: rough ~ c.clip_score + (1 | clip) + (1 + c.clip_score | id) + (1 | speaker) 
    Data: art_data (Number of observations: 1680) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
@@ -57,25 +10,27 @@ Formula: honest ~ c.clip_score + (1 | clip) + (1 | id) + (1 | speaker)
 Group-Level Effects: 
 ~clip (Number of levels: 40) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.37      0.08     0.23     0.54 1.01     1165     2262
+sd(Intercept)     0.37      0.09     0.21     0.57 1.00     1132     1761
 
 ~id (Number of levels: 42) 
-              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     1.48      0.18     1.18     1.87 1.01      588     1055
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                   1.19      0.15     0.93     1.51 1.00      816     1281
+sd(c.clip_score)               34.70      5.20    25.54    45.61 1.00     1639     2525
+cor(Intercept,c.clip_score)    -0.31      0.16    -0.60     0.02 1.00     1851     2538
 
 ~speaker (Number of levels: 10) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.12      0.10     0.00     0.36 1.00      949     1283
+sd(Intercept)     0.75      0.27     0.35     1.37 1.00     1100     1700
 
 Population-Level Effects: 
              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept[1]    -7.75      0.77    -9.46    -6.46 1.01     1510     1613
-Intercept[2]    -5.35      0.34    -6.03    -4.71 1.02      593     1248
-Intercept[3]    -3.84      0.27    -4.38    -3.32 1.03      329      879
-Intercept[4]    -1.11      0.25    -1.60    -0.60 1.03      280      681
-Intercept[5]     1.32      0.25     0.84     1.83 1.03      299      835
-Intercept[6]     4.74      0.30     4.15     5.36 1.02      471     1215
-c.clip_score    -8.88      5.82   -20.05     2.82 1.00     2187     2635
+Intercept[1]    -5.90      0.40    -6.69    -5.14 1.00     1336     1781
+Intercept[2]    -2.45      0.32    -3.06    -1.81 1.00     1042     1619
+Intercept[3]    -0.63      0.31    -1.23    -0.02 1.00     1029     1606
+Intercept[4]     0.45      0.31    -0.14     1.08 1.00     1041     1692
+Intercept[5]     2.35      0.31     1.75     2.98 1.00     1047     1737
+Intercept[6]     4.72      0.35     4.07     5.42 1.00     1185     1883
+c.clip_score    39.97     12.19    16.72    64.42 1.00     1456     2028
 
 Family Specific Parameters: 
      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
@@ -85,7 +40,51 @@ Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).
 
-## HYPOTHESIS TESTING FOR 'HONEST'
+## ROUGH -- HYPOTHESIS ##
+          Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
+1 (c.clip_score) > 0  39.9715   12.1922  20.4104   60.409       3999    0.9998    *
+
+########
+
+### HONEST -- MODEL ###
+
+ Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: honest ~ c.clip_score + (1 + c.clip_score | id) + (1 | clip) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.38      0.07     0.24     0.53 1.00     1766     2389
+
+~id (Number of levels: 42) 
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                   1.52      0.18     1.21     1.92 1.00      560     1325
+sd(c.clip_score)               21.48      6.18     6.57    32.52 1.00      804      444
+cor(Intercept,c.clip_score)    -0.08      0.21    -0.48     0.32 1.00     2684     1691
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.13      0.10     0.01     0.38 1.00     1076     1455
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -7.78      0.76    -9.44    -6.48 1.00     1292     2267
+Intercept[2]    -5.40      0.35    -6.10    -4.73 1.01      587     1090
+Intercept[3]    -3.87      0.29    -4.44    -3.30 1.02      428      856
+Intercept[4]    -1.11      0.27    -1.63    -0.58 1.02      373      724
+Intercept[5]     1.38      0.27     0.85     1.91 1.02      369      707
+Intercept[6]     4.83      0.33     4.19     5.49 1.02      505     1117
+c.clip_score    -9.20      7.06   -22.84     4.99 1.00     1891     2289
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+## HONEST -- HYPOTHESIS ##
 Hypothesis Tests for class b:
           Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
-1 (c.clip_score) > 0   -8.879    5.8207 -18.3358   0.8146     0.0698    0.0652 
+1 (c.clip_score) > 0  -9.1953    7.0605 -20.5395   2.5706     0.1074     0.097     
