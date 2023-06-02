@@ -5,7 +5,7 @@ library(brms)
 library(dplyr)
 library(boot)
 theme_set(theme_bw())
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") 
+cbPalette <- c("#CC6677", "#56B4E9", "#44AA99", "#AA4499", "#E69F00", "#6699CC", "#D55E00") 
 
 # load data
 # the recode file has +1 on all raw values, i.e., 0 -> 1, 1 -> 2, etc.
@@ -102,11 +102,6 @@ ggplot(art_data, aes(x=clip_score,y=rough)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
   labs(title="Relationship between Singlish score and ROUGH", x="Singlish score", y="This speaker is ROUGH.")
-## casual
-ggplot(art_data, aes(x=clip_score,y=casual)) +
-  geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
-  geom_smooth(method="lm", aes(group = 1)) + 
-  labs(title="Relationship between Singlish score and CASUAL", x="Singlish score", y="This speaker is CASUAL.")
 ## honest
 ggplot(art_data, aes(x=clip_score,y=honest)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
@@ -117,18 +112,23 @@ ggplot(art_data, aes(x=clip_score,y=easygoing)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
   labs(title="Relationship between Singlish score and EASYGOING", x="Singlish score", y="This speaker is EASYGOING.")
-## proper
-ggplot(art_data, aes(x=clip_score,y=proper)) +
+## casual
+ggplot(art_data, aes(x=clip_score,y=casual)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
-  labs(title="Relationship between Singlish score and PROPER", x="Singlish score", y="This speaker is PROPER.")
+  labs(title="Relationship between Singlish score and CASUAL", x="Singlish score", y="This speaker is CASUAL.")
 ## fast-speaking
 ggplot(art_data, aes(x=clip_score,y=fastspeaking)) +
   geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
   geom_smooth(method="lm", aes(group = 1)) + 
   labs(title="Relationship between Singlish score and FAST-SPEAKING", x="Singlish score", y="This speaker is FAST-SPEAKING.")
+## proper
+ggplot(art_data, aes(x=clip_score,y=proper)) +
+  geom_point(size=0.5, alpha=0.5, colour="grey", position = position_jitter(width = 0)) +
+  geom_smooth(method="lm", aes(group = 1)) + 
+  labs(title="Relationship between Singlish score and PROPER", x="Singlish score", y="This speaker is PROPER.")
 
-# plot mean rating for each attribute
+# plot proportion of responses for each attribute
 
 ## rough
 agr_rough = art_data %>% 
@@ -162,8 +162,8 @@ sum_rough <- agr_rough %>%
 sum_rough$Response <- factor(sum_rough$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
 
 ggplot(sum_rough) +
-  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[1]) +
-  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  geom_point( aes(x=Response, y=mean), stat="identity", colour=cbPalette[1]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour=cbPalette[1], alpha=0.6, linewidth=.7) +
   labs(title = "This speaker is ROUGH.", x = " ", y = "proportion", las=2) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -199,8 +199,8 @@ sum_honest <- agr_honest %>%
 sum_honest$Response <- factor(sum_honest$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
 
 ggplot(sum_honest) +
-  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[2]) +
-  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  geom_point( aes(x=Response, y=mean), stat="identity", colour=cbPalette[2]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour=cbPalette[2], alpha=0.6, linewidth=.7) +
   labs(title = "This speaker is HONEST.", x = " ", y = "proportion", las=2) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -236,8 +236,8 @@ sum_easygoing <- agr_easygoing %>%
 sum_easygoing$Response <- factor(sum_easygoing$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
 
 ggplot(sum_easygoing) +
-  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[3]) +
-  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  geom_point( aes(x=Response, y=mean), stat="identity", colour=cbPalette[3]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour=cbPalette[3], alpha=0.6, linewidth=.7) +
   labs(title = "This speaker is EASYGOING.", x = " ", y = "proportion", las=2) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -273,8 +273,8 @@ sum_casual <- agr_casual %>%
 sum_casual$Response <- factor(sum_casual$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
 
 ggplot(sum_casual) +
-  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[4]) +
-  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  geom_point( aes(x=Response, y=mean), stat="identity", colour=cbPalette[4]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour=cbPalette[4], alpha=0.6, linewidth=.7) +
   labs(title = "This speaker is CASUAL.", x = " ", y = "proportion", las=2) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -310,8 +310,8 @@ sum_fastspeaking <- agr_fastspeaking %>%
 sum_fastspeaking$Response <- factor(sum_fastspeaking$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
 
 ggplot(sum_fastspeaking) +
-  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[5]) +
-  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  geom_point( aes(x=Response, y=mean), stat="identity", colour=cbPalette[5]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour=cbPalette[5], alpha=0.6, linewidth=.7) +
   labs(title = "This speaker is FAST-SPEAKING.", x = " ", y = "proportion", las=2) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -347,7 +347,7 @@ sum_proper <- agr_proper %>%
 sum_proper$Response <- factor(sum_proper$Response, levels = c("StronglyDisagree", "Disagree", "SomewhatDisagree", "Neutral", "SomewhatAgree", "Agree", "StronglyAgree"))
 
 ggplot(sum_proper) +
-  geom_bar( aes(x=Response, y=mean), stat="identity", fill=cbPalette[6]) +
-  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour="black", alpha=0.6, linewidth=.7) +
+  geom_point( aes(x=Response, y=mean), stat="identity", colour=cbPalette[6]) +
+  geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour=cbPalette[6], alpha=0.6, linewidth=.7) +
   labs(title = "This speaker is PROPER.", x = " ", y = "proportion", las=2) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
