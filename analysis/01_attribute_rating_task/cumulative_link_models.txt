@@ -1,0 +1,91 @@
+### CUMULATIVE LINK MODEL FOR 'ROUGH'
+
+ Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: rough ~ c.clip_score + (1 | clip) + (1 | id) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.35      0.09     0.20     0.55 1.00     1021     1911
+
+~id (Number of levels: 42) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.12      0.14     0.88     1.43 1.01      845     1128
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.72      0.26     0.33     1.36 1.01      813     1111
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -5.61      0.38    -6.35    -4.84 1.00      741     1837
+Intercept[2]    -2.34      0.30    -2.93    -1.74 1.00      574     1324
+Intercept[3]    -0.63      0.29    -1.21    -0.06 1.00      538      977
+Intercept[4]     0.41      0.29    -0.16     0.98 1.00      544     1139
+Intercept[5]     2.24      0.30     1.66     2.83 1.00      574     1202
+Intercept[6]     4.51      0.33     3.87     5.18 1.00      745     1822
+c.clip_score    36.84     10.69    16.94    59.18 1.01     1109     1366
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+## HYPOTHESIS FOR 'ROUGH'
+Hypothesis Tests for class b:
+          Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
+1 (c.clip_score) > 0  36.8418   10.6876  19.8428  55.3015        Inf         1    *
+
+########
+
+### CUMULATIVE LINK FOR 'HONEST' 
+
+Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: honest ~ c.clip_score + (1 | clip) + (1 | id) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.37      0.08     0.23     0.54 1.01     1165     2262
+
+~id (Number of levels: 42) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.48      0.18     1.18     1.87 1.01      588     1055
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.12      0.10     0.00     0.36 1.00      949     1283
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -7.75      0.77    -9.46    -6.46 1.01     1510     1613
+Intercept[2]    -5.35      0.34    -6.03    -4.71 1.02      593     1248
+Intercept[3]    -3.84      0.27    -4.38    -3.32 1.03      329      879
+Intercept[4]    -1.11      0.25    -1.60    -0.60 1.03      280      681
+Intercept[5]     1.32      0.25     0.84     1.83 1.03      299      835
+Intercept[6]     4.74      0.30     4.15     5.36 1.02      471     1215
+c.clip_score    -8.88      5.82   -20.05     2.82 1.00     2187     2635
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+## HYPOTHESIS TESTING FOR 'HONEST'
+Hypothesis Tests for class b:
+          Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
+1 (c.clip_score) > 0   -8.879    5.8207 -18.3358   0.8146     0.0698    0.0652 
