@@ -5,7 +5,7 @@ library(brms)
 library(dplyr)
 library(boot)
 theme_set(theme_bw())
-cbPalette <- c("#CC6677", "#56B4E9", "#44AA99", "#AA4499", "#E69F00", "#6699CC", "#D55E00") 
+cbPalette <- c("#CC6677", "#332288", "#882255", "#999933", "#E69F00", "#117733", "#D55E00") 
 
 # load data
 # the recode file has +1 on all raw values, i.e., 0 -> 1, 1 -> 2, etc.
