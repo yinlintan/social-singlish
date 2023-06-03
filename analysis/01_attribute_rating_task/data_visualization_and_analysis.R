@@ -69,7 +69,7 @@ loo(m.logit,m.acat)
 ### ACTUAL MODEL -- CUMULATIVE LINK ORDINAL REGRESSION MODEL ###
 # Dependent Variable: Attribute Rating
 # Fixed effect: Singlish (Markhov) score (c.clip_score)
-# Random effects: random intercept of speaker and clip, random by participant slope for Singlish score
+# Random effects: random intercept of speaker and clip, by-participant slope for Singlish score
 
 ## Rough
 m.rough = brm(honest ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
@@ -81,7 +81,7 @@ summary(m.rough)
 m.rough <- hypothesis(m.rough, "c.clip_score > 0")
 print(m.rough, digits = 4)
 
-## honest
+## Honest
 m.honest = brm(honest ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
               data=art_data,
               family=cumulative(),
@@ -90,6 +90,69 @@ summary(m.honest)
 # what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
 h.honest <- hypothesis(m.honest, "c.clip_score > 0")
 print(h.honest, digits = 4)
+
+## Easygoing
+m.easygoing = brm(easygoing ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+               data=art_data,
+               family=cumulative(),
+               cores=4)
+summary(m.easygoing)
+# what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
+h.easygoing <- hypothesis(m.easygoing, "c.clip_score > 0")
+print(h.easygoing, digits = 4)
+
+## Casual
+m.casual = brm(casual ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+                  data=art_data,
+                  family=cumulative(),
+                  cores=4)
+summary(m.casual)
+# what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
+h.casual <- hypothesis(m.casual, "c.clip_score > 0")
+print(h.casual, digits = 4)
+
+## Fast-speaking
+m.fastspeaking = brm(fastspeaking ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+               data=art_data,
+               family=cumulative(),
+               cores=4)
+summary(m.fastspeaking)
+# what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
+h.fastspeaking <- hypothesis(m.fastspeaking, "c.clip_score > 0")
+print(h.fastspeaking, digits = 4)
+
+## Proper
+# need to reverse-code first, because the hypothesized relationship between Singlish score and Proper is negative
+art_data_proper <- art_data_proper %>%
+  mutate (
+    new_proper = case_when(
+      proper == 1 ~ 7,
+      proper == 2 ~ 6,
+      proper == 3 ~ 5,
+      proper == 4 ~ 4,
+      proper == 5 ~ 3,
+      proper == 6 ~ 2,
+      proper == 7 ~ 1
+    )
+  )
+# now actually run the model
+m.proper = brm(new_proper ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+                     data=art_data_proper,
+                     family=cumulative(),
+                     cores=4)
+summary(m.proper)
+# what is the Bayes Factor and the probability of the Singlish score main effect being more than 0?
+h.proper <- hypothesis(m.proper, "c.clip_score > 0")
+print(h.proper, digits = 4)
+# model without reverse-coding
+m.proper.2 = brm(proper ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+               data=art_data,
+               family=cumulative(),
+               cores=4)
+summary(m.proper.2)
+# what is the Bayes Factor and the probability of the Singlish score main effect being less than 0?
+h.proper <- hypothesis(m.proper.2, "c.clip_score < 0")
+print(h.proper, digits = 4)
 
 ### VISUALIZING DATA ###
 
