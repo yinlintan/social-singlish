@@ -145,14 +145,14 @@ summary(m.proper)
 h.proper <- hypothesis(m.proper, "c.clip_score > 0")
 print(h.proper, digits = 4)
 # model without reverse-coding
-m.proper.2 = brm(proper ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+m.proper2 = brm(proper ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
                data=art_data,
                family=cumulative(),
                cores=4)
-summary(m.proper.2)
+summary(m.proper2)
 # what is the Bayes Factor and the probability of the Singlish score main effect being less than 0?
-h.proper <- hypothesis(m.proper.2, "c.clip_score < 0")
-print(h.proper, digits = 4)
+h.proper2 <- hypothesis(m.proper2, "c.clip_score < 0")
+print(h.proper2, digits = 4)
 
 ### VISUALIZING DATA ###
 
@@ -414,3 +414,107 @@ ggplot(sum_proper) +
   geom_errorbar( aes(x=Response, ymin=mean-ic, ymax=mean+ic), width=0.4, colour=cbPalette[6], alpha=0.6, linewidth=.7) +
   labs(title = "This speaker is PROPER.", x = " ", y = "proportion", las=2) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+# plot means of attribute rating (y-axis) against clip score (x-axis)
+
+## rough
+mean_rough <- art_data %>%
+  group_by(c.clip_score) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(rough)),
+    sd=sd(as.numeric(rough))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+ggplot(mean_rough) +
+  geom_point( aes(x=c.clip_score, y=mean), stat="identity", colour=cbPalette[1]) +
+  geom_errorbar( aes(x=c.clip_score, ymin=mean-ic, ymax=mean+ic), width=0.0005, colour=cbPalette[1], alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is ROUGH.", x = "Singlish score", y = "Rating") +
+  ylim(1, 7) 
+
+## honest
+mean_honest <- art_data %>%
+  group_by(c.clip_score) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(honest)),
+    sd=sd(as.numeric(honest))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+ggplot(mean_honest) +
+  geom_point( aes(x=c.clip_score, y=mean), stat="identity", colour=cbPalette[2]) +
+  geom_errorbar( aes(x=c.clip_score, ymin=mean-ic, ymax=mean+ic), width=0.0005, colour=cbPalette[2], alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is HONEST.", x = "Singlish score", y = "Rating") +
+  ylim(1, 7) 
+
+## easygoing
+mean_easygoing <- art_data %>%
+  group_by(c.clip_score) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(easygoing)),
+    sd=sd(as.numeric(easygoing))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+ggplot(mean_easygoing) +
+  geom_point( aes(x=c.clip_score, y=mean), stat="identity", colour=cbPalette[3]) +
+  geom_errorbar( aes(x=c.clip_score, ymin=mean-ic, ymax=mean+ic), width=0.0005, colour=cbPalette[3], alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is EASYGOING.", x = "Singlish score", y = "Rating") +
+  ylim(1, 7) 
+
+## casual
+mean_casual <- art_data %>%
+  group_by(c.clip_score) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(casual)),
+    sd=sd(as.numeric(casual))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+ggplot(mean_casual) +
+  geom_point( aes(x=c.clip_score, y=mean), stat="identity", colour=cbPalette[4]) +
+  geom_errorbar( aes(x=c.clip_score, ymin=mean-ic, ymax=mean+ic), width=0.0005, colour=cbPalette[4], alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is CASUAL.", x = "Singlish score", y = "Rating") +
+  ylim(1, 7) 
+
+## fast-speaking
+mean_fastspeaking <- art_data %>%
+  group_by(c.clip_score) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(fastspeaking)),
+    sd=sd(as.numeric(fastspeaking))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+ggplot(mean_fastspeaking) +
+  geom_point( aes(x=c.clip_score, y=mean), stat="identity", colour=cbPalette[5]) +
+  geom_errorbar( aes(x=c.clip_score, ymin=mean-ic, ymax=mean+ic), width=0.0005, colour=cbPalette[5], alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is FAST-SPEAKING.", x = "Singlish score", y = "Rating") +
+  ylim(1, 7) 
+
+## proper
+mean_proper <- art_data %>%
+  group_by(c.clip_score) %>%
+  summarise( 
+    n=n(),
+    mean=mean(as.numeric(proper)),
+    sd=sd(as.numeric(proper))
+  ) %>%
+  mutate( se=sd/sqrt(n))  %>%
+  mutate( ic=se * qt((1-0.05)/2 + .5, n-1))
+
+ggplot(mean_proper) +
+  geom_point( aes(x=c.clip_score, y=mean), stat="identity", colour=cbPalette[6]) +
+  geom_errorbar( aes(x=c.clip_score, ymin=mean-ic, ymax=mean+ic), width=0.0005, colour=cbPalette[6], alpha=0.6, linewidth=.7) +
+  labs(title = "This speaker is PROPER.", x = "Singlish score", y = "Rating") +
+  ylim(1, 7) 
