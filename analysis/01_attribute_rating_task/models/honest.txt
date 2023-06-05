@@ -1,0 +1,124 @@
+## FULL MODEL -- HONEST ##
+ Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: honest ~ c.clip_score + (1 + c.clip_score | id) + (1 | clip) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.38      0.08     0.23     0.55 1.00     1428     2245
+
+~id (Number of levels: 42) 
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                   1.51      0.18     1.20     1.91 1.01      603     1157
+sd(c.clip_score)               19.96      7.35     1.43    32.31 1.02      303      243
+cor(Intercept,c.clip_score)    -0.07      0.25    -0.55     0.40 1.00     2698     1393
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.12      0.10     0.00     0.38 1.00      719      976
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -7.82      0.78    -9.54    -6.48 1.00     1449     2032
+Intercept[2]    -5.41      0.35    -6.11    -4.73 1.01      442     1529
+Intercept[3]    -3.89      0.29    -4.45    -3.34 1.01      330     1147
+Intercept[4]    -1.13      0.26    -1.64    -0.61 1.02      311      942
+Intercept[5]     1.35      0.26     0.86     1.88 1.02      340     1030
+Intercept[6]     4.80      0.31     4.22     5.42 1.01      469     1414
+c.clip_score    -9.24      6.83   -22.17     4.09 1.00     2002     2479
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+## NULL MODEL -- HONEST ##
+ Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: honest ~ (1 + c.clip_score | id) + (1 | clip) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.38      0.08     0.23     0.54 1.00     1122     1197
+
+~id (Number of levels: 42) 
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                   1.52      0.18     1.22     1.91 1.01      610      995
+sd(c.clip_score)               20.56      7.09     1.90    32.58 1.01      562      301
+cor(Intercept,c.clip_score)    -0.08      0.24    -0.61     0.37 1.01     1609      673
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.15      0.11     0.01     0.43 1.00      592     1190
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -7.81      0.78    -9.55    -6.50 1.00     1079     1647
+Intercept[2]    -5.39      0.35    -6.08    -4.72 1.01      504     1268
+Intercept[3]    -3.86      0.29    -4.44    -3.30 1.01      359      677
+Intercept[4]    -1.10      0.26    -1.61    -0.58 1.01      319      593
+Intercept[5]     1.38      0.26     0.87     1.92 1.01      318      486
+Intercept[6]     4.83      0.32     4.24     5.47 1.01      474     1191
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+## BAYES FACTOR -- HONEST ##
+Estimated Bayes factor in favor of m.honest over m.honest.null: 59.76233
+
+## LOO -- HONEST ##
+Output of model 'm.honest':
+
+Computed from 4000 by 1680 log-likelihood matrix
+
+         Estimate   SE
+elpd_loo  -1889.3 42.0
+p_loo        90.9  3.3
+looic      3778.6 84.1
+------
+Monte Carlo SE of elpd_loo is 0.2.
+
+All Pareto k estimates are good (k < 0.5).
+See help('pareto-k-diagnostic') for details.
+
+Output of model 'm.honest.null':
+
+Computed from 4000 by 1680 log-likelihood matrix
+
+         Estimate   SE
+elpd_loo  -1888.8 42.1
+p_loo        91.2  3.4
+looic      3777.7 84.1
+------
+Monte Carlo SE of elpd_loo is 0.2.
+
+Pareto k diagnostic values:
+                         Count Pct.    Min. n_eff
+(-Inf, 0.5]   (good)     1679  99.9%   487       
+ (0.5, 0.7]   (ok)          1   0.1%   523       
+   (0.7, 1]   (bad)         0   0.0%   <NA>      
+   (1, Inf)   (very bad)    0   0.0%   <NA>      
+
+All Pareto k estimates are ok (k < 0.7).
+See help('pareto-k-diagnostic') for details.
+
+Model comparisons:
+              elpd_diff se_diff
+m.honest.null  0.0       0.0   
+m.honest      -0.5       0.8   
