@@ -1,0 +1,117 @@
+## FULL MODEL -- FAST-SPEAKING ##
+ Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: fastspeaking ~ c.clip_score + (1 + c.clip_score | id) + (1 | clip) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.99      0.15     0.74     1.34 1.00     1450     2318
+
+~id (Number of levels: 42) 
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                   1.13      0.14     0.89     1.43 1.00      871     2056
+sd(c.clip_score)               23.36      4.90    14.24    33.51 1.00     1582     2191
+cor(Intercept,c.clip_score)     0.14      0.20    -0.25     0.51 1.00     3223     3078
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.98      0.36     0.42     1.83 1.00     1102     1459
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -5.73      0.47    -6.66    -4.83 1.00     1917     1956
+Intercept[2]    -3.09      0.41    -3.89    -2.28 1.00     1674     2414
+Intercept[3]    -1.47      0.40    -2.26    -0.70 1.00     1615     2556
+Intercept[4]     0.06      0.40    -0.73     0.83 1.00     1612     2566
+Intercept[5]     2.15      0.40     1.37     2.94 1.00     1656     2401
+Intercept[6]     4.60      0.43     3.77     5.45 1.00     1861     2672
+c.clip_score    34.30     18.00    -0.71    69.92 1.00     1846     2192
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+## NULL MODEL -- FAST-SPEAKING ##
+ Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: fastspeaking ~ (1 + c.clip_score | id) + (1 | clip) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.04      0.16     0.78     1.39 1.00     1223     1126
+
+~id (Number of levels: 42) 
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                   1.13      0.14     0.89     1.43 1.01      846     1886
+sd(c.clip_score)               22.91      5.14    13.12    33.42 1.00     1595     1538
+cor(Intercept,c.clip_score)     0.15      0.19    -0.23     0.52 1.00     3642     2640
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.99      0.36     0.39     1.79 1.01      586      585
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -5.70      0.48    -6.64    -4.78 1.00     1685     2271
+Intercept[2]    -3.06      0.41    -3.85    -2.26 1.00     1463     2388
+Intercept[3]    -1.44      0.40    -2.21    -0.63 1.00     1439     2225
+Intercept[4]     0.09      0.40    -0.68     0.89 1.00     1432     2217
+Intercept[5]     2.18      0.41     1.40     2.98 1.00     1476     2246
+Intercept[6]     4.63      0.42     3.83     5.48 1.00     1595     2390
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+## BAYES FACTOR -- FAST-SPEAKING ##
+Estimated Bayes factor in favor of m.fastspeaking over m.fastspeaking.null: 307.32232
+
+## LOO -- FAST-SPEAKING ##
+Output of model 'm.fastspeaking':
+
+Computed from 4000 by 1680 log-likelihood matrix
+
+         Estimate   SE
+elpd_loo  -2357.8 27.6
+p_loo       110.6  3.0
+looic      4715.5 55.3
+------
+Monte Carlo SE of elpd_loo is 0.2.
+
+All Pareto k estimates are good (k < 0.5).
+See help('pareto-k-diagnostic') for details.
+
+Output of model 'm.fastspeaking.null':
+
+Computed from 4000 by 1680 log-likelihood matrix
+
+         Estimate   SE
+elpd_loo  -2358.1 27.6
+p_loo       110.7  3.0
+looic      4716.2 55.3
+------
+Monte Carlo SE of elpd_loo is 0.2.
+
+All Pareto k estimates are good (k < 0.5).
+See help('pareto-k-diagnostic') for details.
+
+Model comparisons:
+                    elpd_diff se_diff
+m.fastspeaking       0.0       0.0   
+m.fastspeaking.null -0.4       0.6   

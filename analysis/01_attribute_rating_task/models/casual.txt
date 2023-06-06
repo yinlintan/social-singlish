@@ -1,0 +1,134 @@
+## FULL MODEL -- CASUAL ##
+
+ Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: casual ~ c.clip_score + (1 + c.clip_score | id) + (1 | clip) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.26      0.09     0.07     0.44 1.00      879      791
+
+~id (Number of levels: 42) 
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                   1.11      0.14     0.87     1.43 1.00     1121     1786
+sd(c.clip_score)               46.35      6.65    34.14    60.36 1.00     1349     2444
+cor(Intercept,c.clip_score)     0.10      0.17    -0.23     0.43 1.00     1414     1967
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.43      0.16     0.20     0.82 1.00     1165     1558
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -7.71      0.76    -9.45    -6.43 1.00     2816     2241
+Intercept[2]    -3.68      0.25    -4.18    -3.20 1.00     1117     2050
+Intercept[3]    -2.46      0.24    -2.93    -1.99 1.00      950     2021
+Intercept[4]    -1.39      0.23    -1.85    -0.93 1.00      898     1958
+Intercept[5]     0.71      0.23     0.26     1.17 1.00      908     1942
+Intercept[6]     3.39      0.26     2.91     3.91 1.00     1005     2214
+c.clip_score    60.72     10.26    40.42    80.77 1.00     1553     2152
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1)
+
+## NULL MODEL -- CASUAL ##
+
+ Family: cumulative 
+  Links: mu = logit; disc = identity 
+Formula: casual ~ (1 + c.clip_score | id) + (1 | clip) + (1 | speaker) 
+   Data: art_data (Number of observations: 1680) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Group-Level Effects: 
+~clip (Number of levels: 40) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.35      0.10     0.16     0.56 1.00      706     1301
+
+~id (Number of levels: 42) 
+                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                   1.13      0.15     0.87     1.44 1.00      789     1698
+sd(c.clip_score)               57.76      9.67    41.33    78.79 1.00      643     1441
+cor(Intercept,c.clip_score)     0.11      0.19    -0.28     0.48 1.01      555     1058
+
+~speaker (Number of levels: 10) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.65      0.23     0.32     1.20 1.00      863     1301
+
+Population-Level Effects: 
+             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept[1]    -7.64      0.79    -9.34    -6.24 1.00     1871     2028
+Intercept[2]    -3.60      0.33    -4.25    -2.94 1.01      814     1546
+Intercept[3]    -2.37      0.32    -3.00    -1.73 1.01      765     1390
+Intercept[4]    -1.30      0.31    -1.91    -0.66 1.01      764     1317
+Intercept[5]     0.81      0.31     0.19     1.46 1.01      740     1188
+Intercept[6]     3.48      0.33     2.84     4.17 1.01      810     1443
+
+Family Specific Parameters: 
+     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+disc     1.00      0.00     1.00     1.00   NA       NA       NA
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
+
+## BAYES FACTOR -- CASUAL ##
+Estimated Bayes factor in favor of m.casual over m.casual.null: 61822158.53750
+
+## LOO -- CASUAL ##
+
+Output of model 'm.casual':
+
+Computed from 4000 by 1680 log-likelihood matrix
+
+         Estimate   SE
+elpd_loo  -2273.4 34.5
+p_loo       104.9  3.5
+looic      4546.9 69.0
+------
+Monte Carlo SE of elpd_loo is 0.2.
+
+Pareto k diagnostic values:
+                         Count Pct.    Min. n_eff
+(-Inf, 0.5]   (good)     1678  99.9%   1058      
+ (0.5, 0.7]   (ok)          2   0.1%   878       
+   (0.7, 1]   (bad)         0   0.0%   <NA>      
+   (1, Inf)   (very bad)    0   0.0%   <NA>      
+
+All Pareto k estimates are ok (k < 0.7).
+See help('pareto-k-diagnostic') for details.
+
+Output of model 'm.casual.null':
+
+Computed from 4000 by 1680 log-likelihood matrix
+
+         Estimate   SE
+elpd_loo  -2275.4 34.6
+p_loo       111.2  3.7
+looic      4550.8 69.2
+------
+Monte Carlo SE of elpd_loo is 0.2.
+
+Pareto k diagnostic values:
+                         Count Pct.    Min. n_eff
+(-Inf, 0.5]   (good)     1678  99.9%   924       
+ (0.5, 0.7]   (ok)          2   0.1%   803       
+   (0.7, 1]   (bad)         0   0.0%   <NA>      
+   (1, Inf)   (very bad)    0   0.0%   <NA>      
+
+All Pareto k estimates are ok (k < 0.7).
+See help('pareto-k-diagnostic') for details.
+
+Model comparisons:
+              elpd_diff se_diff
+m.casual       0.0       0.0   
+m.casual.null -1.9       2.4 
