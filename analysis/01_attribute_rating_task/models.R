@@ -87,7 +87,6 @@ m.rough.null = brm(rough ~ (1+c.clip_score|id) + (1|clip) + (1|speaker),
               cores=4)
 summary(m.rough.null)
 # check bayes factor by comparing the two models
-bayes_factor(m.rough, m.rough.null)
 bayesfactor.rough <- bayes_factor(m.rough, m.rough.null)
 print(bayesfactor.rough)
 # check model
@@ -112,40 +111,117 @@ m.honest.null = brm(honest ~ (1+c.clip_score|id) + (1|clip) + (1|speaker),
                save_all_pars=TRUE,
                cores=4)
 summary(m.honest.null)
+# check bayes factor by comparing the two models
+bayesfactor.honest <- bayes_factor(m.honest, m.honest.null)
+print(bayesfactor.honest)
+# check model
+loo.honest <- loo(m.honest, m.honest.null)
+print(loo.honest)
 # what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
 h.honest <- hypothesis(m.honest, "c.clip_score > 0")
 print(h.honest, digits = 4)
 
 ## Easygoing
+# full model
 m.easygoing = brm(easygoing ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
                   data=art_data,
                   family=cumulative(),
+                  save_all_pars=TRUE,
                   cores=4)
 summary(m.easygoing)
+# null model
+m.easygoing.null = brm(easygoing ~ (1+c.clip_score|id) + (1|clip) + (1|speaker),
+                  data=art_data,
+                  family=cumulative(),
+                  save_all_pars=TRUE,
+                  cores=4)
+summary(m.easygoing.null)
+# check bayes factor by comparing the two models
+bayesfactor.easygoing <- bayes_factor(m.easygoing, m.easygoing.null)
+print(bayesfactor.easygoing)
+# check model
+loo.easygoing <- loo(m.easygoing, m.easygoing.null)
+print(loo.easygoing)
 # what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
 h.easygoing <- hypothesis(m.easygoing, "c.clip_score > 0")
 print(h.easygoing, digits = 4)
 
 ## Casual
+# full model
 m.casual = brm(casual ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
                data=art_data,
                family=cumulative(),
+               save_all_pars=TRUE,
                cores=4)
 summary(m.casual)
+# null model
+m.casual.null = brm(casual ~ (1+c.clip_score|id) + (1|clip) + (1|speaker),
+               data=art_data,
+               family=cumulative(),
+               save_all_pars=TRUE,
+               cores=4)
+summary(m.casual.null)
+# check bayes factor by comparing the two models
+bayesfactor.casual <- bayes_factor(m.casual, m.casual.null)
+print(bayesfactor.casual)
+# check model
+loo.casual <- loo(m.casual, m.casual.null)
+print(loo.casual)
 # what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
 h.casual <- hypothesis(m.casual, "c.clip_score > 0")
 print(h.casual, digits = 4)
 
 ## Fast-speaking
+# full model
 m.fastspeaking = brm(fastspeaking ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
                      data=art_data,
                      family=cumulative(),
+                     save_all_pars=TRUE,
                      cores=4)
 summary(m.fastspeaking)
+# null model
+m.fastspeaking.null = brm(fastspeaking ~ (1+c.clip_score|id) + (1|clip) + (1|speaker),
+                     data=art_data,
+                     family=cumulative(),
+                     save_all_pars=TRUE,
+                     cores=4)
+summary(m.fastspeaking.null)
+# check bayes factor by comparing the two models
+bayesfactor.fastspeaking <- bayes_factor(m.fastspeaking, m.fastspeaking.null)
+print(bayesfactor.fastspeaking)
+# check model
+loo.fastspeaking <- loo(m.fastspeaking, m.fastspeaking.null)
+print(loo.fastspeaking)
 # what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
 h.fastspeaking <- hypothesis(m.fastspeaking, "c.clip_score > 0")
 print(h.fastspeaking, digits = 4)
 
+## Proper
+# full model
+m.proper = brm(proper ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
+               data=art_data,
+               family=cumulative(),
+               save_all_pars=TRUE,
+               cores=4)
+summary(m.proper)
+# null model
+m.proper.null = brm(proper ~ (1+c.clip_score|id) + (1|clip) + (1|speaker),
+                    data=art_data,
+                    family=cumulative(),
+                    save_all_pars=TRUE,
+                    cores=4)
+summary(m.proper.null)
+# check bayes factor by comparing the two models
+bayesfactor.proper <- bayes_factor(m.proper, m.proper.null)
+print(bayesfactor.proper)
+# check model
+loo.proper <- loo(m.proper, m.proper.null)
+print(loo.proper)
+# what is the Bayes Factor and the probability of the Singlish score main effect being greater than 0?
+h.proper <- hypothesis(m.proper.null, "c.clip_score < 0")
+print(h.proper, digits = 4)
+
+#### IGNORE THIS, IT REVERSE-CODES THE PROPER STUFF
 ## Proper
 # need to reverse-code first, because the hypothesized relationship between Singlish score and Proper is negative
 art_data_proper <- art_data_proper %>%
