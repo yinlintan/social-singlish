@@ -196,6 +196,28 @@ print(loo.fastspeaking)
 h.fastspeaking <- hypothesis(m.fastspeaking, "c.clip_score > 0")
 print(h.fastspeaking, digits = 4)
 
+## Fast-speaking --> incl. speech rate
+# full model
+m.fastspeaking.sr = brm(fastspeaking ~ c.clip_score*c.syllablespersec + (1+c.clip_score*c.syllablespersec|id) + (1|clip) + (1|speaker),
+                     data=art_data_speechrate,
+                     family=cumulative(),
+                     save_all_pars=TRUE,
+                     cores=4)
+summary(m.fastspeaking.sr)
+# null model
+m.fastspeaking.sr.null = brm(fastspeaking ~ (1+c.clip_score*c.syllablespersec|id) + (1|clip) + (1|speaker),
+                          data=art_data_speechrate,
+                          family=cumulative(),
+                          save_all_pars=TRUE,
+                          cores=4)
+summary(m.fastspeaking.sr.null)
+# check bayes factor by comparing the two models
+bayesfactor.fastspeaking.sr <- bayes_factor(m.fastspeaking.sr, m.fastspeaking.sr.null)
+print(bayesfactor.fastspeaking.sr)
+# check model
+loo.fastspeaking <- loo(m.fastspeaking, m.fastspeaking.null)
+print(loo.fastspeaking)
+
 ## Proper
 # full model
 m.proper = brm(proper ~ c.clip_score + (1+c.clip_score|id) + (1|clip) + (1|speaker),
