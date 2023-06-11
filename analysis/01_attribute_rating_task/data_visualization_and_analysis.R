@@ -559,8 +559,9 @@ ggplot(art_data) +
 ggplot(art_data_speechrate) +
   geom_point(aes(x=clip_score, y=fastspeaking, color = syllablespersec.x), stat="identity", alpha=0.35, position = position_jitter(width = 0)) +
   geom_smooth(aes(x = clip_score, y = fastspeaking, group = 1), colour = "black", method="lm") + 
-  labs(title = "This speaker is FAST-SPEAKING.", x = "Singlish score", y = "Rating", color = "Articulation rate\n(syllables per second)")
-
+  labs(title = "This speaker is FAST-SPEAKING.", x = "Singlish score", y = "Rating", color = "Articulation rate\n(syllables per second)") +
+  scale_color_gradient(low = "#64b8f9", high = "#10263b")
+  
 ## proper
 ggplot(art_data) +
   geom_point(aes(x=clip_score, y=proper), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
