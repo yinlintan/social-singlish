@@ -222,3 +222,6 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 
 ## BAYES FACTOR ##
 Estimated Bayes factor in favor of m.fastspeaking.sr over m.fastspeaking.sr.null: 4718386034.05510
+
+## BAYES FACTOR COMPARING INCORPORATING SPEECH RATE VERSUS NOT INCORPORATING SPEECH RATE ##
+Estimated Bayes factor in favor of m.fastspeaking.sr over m.fastspeaking: 56292694363007600.00000

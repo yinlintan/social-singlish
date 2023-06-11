@@ -528,36 +528,41 @@ ggplot(mean_proper) +
 
 ## rough
 ggplot(art_data) +
-  geom_point(aes(x=c.clip_score, y=rough), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
-  geom_smooth(aes(x = c.clip_score, y = rough, group = 1), colour=cbPalette[1], method="lm") + 
+  geom_point(aes(x=clip_score, y=rough), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
+  geom_smooth(aes(x = clip_score, y = rough, group = 1), colour=cbPalette[1], method="lm") + 
   labs(title = "This speaker is ROUGH.", x = "Singlish score", y = "Rating")
 
 ## honest
 ggplot(art_data) +
-  geom_point(aes(x=c.clip_score, y=honest), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
-  geom_smooth(aes(x = c.clip_score, y = honest, group = 1), colour=cbPalette[2], method="lm") + 
+  geom_point(aes(x=clip_score, y=honest), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
+  geom_smooth(aes(x = clip_score, y = honest, group = 1), colour=cbPalette[2], method="lm") + 
   labs(title = "This speaker is HONEST.", x = "Singlish score", y = "Rating")
 
 ## easygoing
 ggplot(art_data) +
-  geom_point(aes(x=c.clip_score, y=easygoing), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
-  geom_smooth(aes(x = c.clip_score, y = easygoing, group = 1), colour=cbPalette[3], method="lm") + 
+  geom_point(aes(x=clip_score, y=easygoing), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
+  geom_smooth(aes(x = clip_score, y = easygoing, group = 1), colour=cbPalette[3], method="lm") + 
   labs(title = "This speaker is EASYGOING.", x = "Singlish score", y = "Rating") 
 
 ## casual
 ggplot(art_data) +
-  geom_point(aes(x=c.clip_score, y=casual), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
-  geom_smooth(aes(x = c.clip_score, y = casual, group = 1), colour=cbPalette[4], method="lm") + 
+  geom_point(aes(x=clip_score, y=casual), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
+  geom_smooth(aes(x = clip_score, y = casual, group = 1), colour=cbPalette[4], method="lm") + 
   labs(title = "This speaker is CASUAL.", x = "Singlish score", y = "Rating") 
 
 ## fast-speaking
 ggplot(art_data) +
-  geom_point(aes(x=c.clip_score, y=fastspeaking), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
-  geom_smooth(aes(x = c.clip_score, y = fastspeaking, group = 1), colour=cbPalette[5], method="lm") + 
+  geom_point(aes(x=clip_score, y=fastspeaking), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
+  geom_smooth(aes(x = clip_score, y = fastspeaking, group = 1), colour=cbPalette[5], method="lm") + 
   labs(title = "This speaker is FAST-SPEAKING.", x = "Singlish score", y = "Rating") 
+
+ggplot(art_data_speechrate) +
+  geom_point(aes(x=clip_score, y=fastspeaking, color = syllablespersec.x), stat="identity", alpha=0.35, position = position_jitter(width = 0)) +
+  geom_smooth(aes(x = clip_score, y = fastspeaking, group = 1), colour = "black", method="lm") + 
+  labs(title = "This speaker is FAST-SPEAKING.", x = "Singlish score", y = "Rating", color = "Articulation rate\n(syllables per second)")
 
 ## proper
 ggplot(art_data) +
-  geom_point(aes(x=c.clip_score, y=proper), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
-  geom_smooth(aes(x = c.clip_score, y = proper, group = 1), colour=cbPalette[6], method="lm") + 
+  geom_point(aes(x=clip_score, y=proper), size=0.5, stat="identity", colour="darkgrey", alpha=0.5, position = position_jitter(width = 0)) +
+  geom_smooth(aes(x = clip_score, y = proper, group = 1), colour=cbPalette[6], method="lm") + 
   labs(title = "This speaker is PROPER.", x = "Singlish score", y = "Rating") 
